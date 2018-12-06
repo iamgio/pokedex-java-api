@@ -3,6 +3,7 @@ package eu.iamgio.pokedex.pokemon;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import eu.iamgio.pokedex.connection.HttpConnection;
+import eu.iamgio.pokedex.exception.PokedexException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -57,9 +58,15 @@ public class Pokemon {
     /**
      * @param name Name of the Pokémon
      * @return Pokémon whose name matches <tt>name</tt>
+     * @throws PokedexException if <tt>name</tt> doesn't match a Pokémon name
      */
-    public static Pokemon fromName(String name) {
-        JsonObject json = new HttpConnection("pokemon/" + name + "/").getJson();
+    public static Pokemon fromName(String name) throws PokedexException {
+        JsonObject json;
+        try {
+            json = new HttpConnection("pokemon/" + name + "/").getJson();
+        } catch(RuntimeException e) {
+            throw new PokedexException("Could not find Pokémon with name/ID " + name);
+        }
         List<PokemonType> types = new ArrayList<>();
         for(JsonElement type : json.getAsJsonArray("types")) {
             types.add(PokemonType.valueOf(type.getAsJsonObject()
@@ -81,8 +88,10 @@ public class Pokemon {
     /**
      * @param id Identifier of the Pokémon
      * @return Pokémon whose ID matches <tt>id</tt>
+     * @throws PokedexException if <tt>id</tt> is 0 or less or doesn't match a Pokémon ID
      */
-    public static Pokemon fromId(int id) {
+    public static Pokemon fromId(int id) throws PokedexException {
+        if(id <= 0) throw new PokedexException("ID cannot be " + (id == 0 ? "0" : "negative"));
         return fromName(String.valueOf(id));
     }
 }
