@@ -58,7 +58,7 @@ public class Pokemon {
      * @param name Name of the Pokémon
      * @return Pokémon whose name matches <tt>name</tt>
      */
-    public static Pokemon byName(String name) {
+    public static Pokemon fromName(String name) {
         JsonObject json = new HttpConnection("pokemon/" + name + "/").getJson();
         List<PokemonType> types = new ArrayList<>();
         for(JsonElement type : json.getAsJsonArray("types")) {
@@ -82,7 +82,7 @@ public class Pokemon {
      * @param id Identifier of the Pokémon
      * @return Pokémon whose ID matches <tt>id</tt>
      */
-    public static Pokemon byId(int id) {
-        return byName(String.valueOf(id));
+    public static Pokemon fromId(int id) {
+        return fromName(String.valueOf(id));
     }
 }

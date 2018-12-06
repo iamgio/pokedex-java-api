@@ -12,7 +12,7 @@ class Tests {
 
     @Test
     void testBulbasaur() {
-        Pokemon bulbasaur = Pokemon.byName("bulbasaur");
+        Pokemon bulbasaur = Pokemon.fromName("bulbasaur");
         assertEquals("bulbasaur", bulbasaur.getName());
         assertEquals(1, bulbasaur.getId());
         assertEquals(7, bulbasaur.getHeight());
