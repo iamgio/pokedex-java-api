@@ -18,6 +18,6 @@ class Tests {
         assertEquals(7, bulbasaur.getHeight());
         assertEquals(69, bulbasaur.getWeight());
         assertEquals(64, bulbasaur.getBaseExperience());
-        assertArrayEquals(bulbasaur.getTypes(), new PokemonType[] {PokemonType.GRASS, PokemonType.POISON});
+        assertArrayEquals(new PokemonType[] {PokemonType.GRASS, PokemonType.POISON}, bulbasaur.getTypes());
     }
 }
