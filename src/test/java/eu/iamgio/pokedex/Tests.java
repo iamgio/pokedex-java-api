@@ -11,10 +11,10 @@ class Tests {
     @Test
     void testBulbasaur() {
         Pokemon bulbasaur = Pokemon.byName("bulbasaur");
-        assertEquals(bulbasaur.getName(), "bulbasaur");
-        assertEquals(bulbasaur.getId(), 1);
-        assertEquals(bulbasaur.getHeight(), 7);
-        assertEquals(bulbasaur.getWeight(), 69);
-        assertEquals(bulbasaur.getBaseExperience(), 64);
+        assertEquals("bulbasaur", bulbasaur.getName());
+        assertEquals(1, bulbasaur.getId());
+        assertEquals(7, bulbasaur.getHeight());
+        assertEquals(69, bulbasaur.getWeight());
+        assertEquals(64, bulbasaur.getBaseExperience());
     }
 }
