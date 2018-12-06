@@ -1,4 +1,4 @@
-package eu.iamgio.pokedex;
+package eu.iamgio.pokedex.pokemon;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public enum Type {
+public enum PokemonType {
 
     NORMAL(1),
     FIGHTING(2),
