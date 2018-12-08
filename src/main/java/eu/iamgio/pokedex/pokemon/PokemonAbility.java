@@ -77,7 +77,7 @@ public class PokemonAbility {
      * @return Ability whose ID matches <tt>id</tt>
      * @throws PokedexException if <tt>id</tt> is 0 or less or doesn't match an ability ID
      */
-    public static PokemonAbility fromId(int id) throws PokedexException {
+    public static PokemonAbility fromId(Number id) throws PokedexException {
         return fromName(String.valueOf(id));
     }
 

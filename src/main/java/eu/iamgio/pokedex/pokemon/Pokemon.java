@@ -90,8 +90,7 @@ public class Pokemon {
      * @return Pokémon whose ID matches <tt>id</tt>
      * @throws PokedexException if <tt>id</tt> is 0 or less or doesn't match a Pokémon ID
      */
-    public static Pokemon fromId(int id) throws PokedexException {
-        if(id <= 0) throw new PokedexException("ID cannot be " + (id == 0 ? "0" : "negative"));
+    public static Pokemon fromId(Number id) throws PokedexException {
         return fromName(String.valueOf(id));
     }
 }

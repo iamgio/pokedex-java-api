@@ -8,7 +8,7 @@
 _pokedex-java-api_ is the first wrapper for [pokeapi.co](https://pokeapi.co) written in pure Java.   
 # Why should I use PDJ API?
 - [x] Fully documented  
-- [x] Everything is treaten as an object  
+- [x] Everything is treated as an object  
 - [x] Mantainable and readable code  
 
 # Getting started
@@ -33,7 +33,6 @@ GRASS
 POISON
 ```
 
-Every component of the API (such as Pokémons, abilities, etc) can be instantiated by using two static methods: `fromName`, which takes the name as a string, and `fromId`, which takes the identifier as an integer.
-
+Every component of the API (such as Pokémons, abilities, etc) can be instantiated by using two static methods: `fromName`, which takes the name as a string, and `fromId`, which takes the identifier as a number.
 
 _This project is currently work in progress. Once finished, the JAR file will be released. At the moment you're free to clone this repository and use it as you wish. Credits to this project and to pokeapi.co are appreciated._
