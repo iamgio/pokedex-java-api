@@ -7,4 +7,4 @@
 # Pokédex Java API
 _pokédex-java-api_ is the first wrapper for [pokeapi.co](https://pokeapi.co) written in pure Java.   
 
-_Work in progress project._
+_This project is currently work in progress. Once finished, the JAR file will be released. At the moment you're free to clone this repository and use it as you wish. Credits to this project and to pokeapi.co are appreciated._
