@@ -16,7 +16,7 @@ _pokedex-java-api_ is the first wrapper for [pokeapi.co](https://pokeapi.co) wri
 To get started, let's try to get the types of [Bulbasaur](https://www.pokemon.com/us/pokedex/bulbasaur):
 
 ```java
-class Main {
+public class Main {
     public static void main(String[] args) {
         Pokemon bulbasaur = Pokemon.fromName("bulbasaur");
         PokemonType[] types = bulbasaur.getTypes();
