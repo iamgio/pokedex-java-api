@@ -25,10 +25,10 @@ class Tests {
     @Test
     void testLevitate() {
         PokemonAbility levitate = PokemonAbility.fromName("levitate");
-        assertEquals(levitate.getId(), 26);
-        assertEquals(levitate.isMainSeries(), true);
-        assertEquals(levitate.getGeneration(), Generation.GENERATION_III);
-        assertNotEquals(levitate.getLocalizedNames().toString(), "[]");
-        assertNotEquals(levitate.getFlavors().toString(), "[]");
+        assertEquals(26, levitate.getId());
+        assertEquals(true, levitate.isMainSeries());
+        assertEquals(Generation.GENERATION_III, levitate.getGeneration());
+        assertNotEquals("[]", levitate.getLocalizedNames().toString());
+        assertNotEquals("[]", levitate.getFlavors().toString());
     }
 }
