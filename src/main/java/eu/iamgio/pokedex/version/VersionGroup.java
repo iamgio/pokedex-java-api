@@ -1,15 +1,16 @@
 package eu.iamgio.pokedex.version;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import eu.iamgio.pokedex.Generation;
 import eu.iamgio.pokedex.connection.HttpConnection;
 import eu.iamgio.pokedex.move.MoveLearnMethod;
+import eu.iamgio.pokedex.util.NamedResource;
+import eu.iamgio.pokedex.util.StringUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * List of available version groups of the game
@@ -48,20 +49,20 @@ public enum VersionGroup {
      */
     public LoadedVersionGroup load() {
         JsonObject json = new HttpConnection("version-group/" + id + "/").getJson();
-        List<Version> versions = new ArrayList<>();
-        for(JsonElement version : json.getAsJsonArray("versions")) {
-            versions.add(Version.valueOf(version.getAsJsonObject().get("name").getAsString().replace("-", "_").toUpperCase()));
-        }
-        List<MoveLearnMethod> moveLearnMethods = new ArrayList<>();
-        for(JsonElement version : json.getAsJsonArray("move_learn_methods")) {
-            moveLearnMethods.add(MoveLearnMethod.valueOf(version.getAsJsonObject().get("name").getAsString().replace("-", "_").toUpperCase()));
-        }
         return new LoadedVersionGroup(
                 id,
                 json.get("order").getAsInt(),
-                Generation.valueOf(json.get("generation").getAsJsonObject().get("name").getAsString().replace("-", "_").toUpperCase()),
-                versions.toArray(new Version[versions.size()]),
-                moveLearnMethods
+                Generation.valueOf(StringUtil.toEnumName(new NamedResource(json.get("generation").getAsJsonObject()).getName())),
+                NamedResource.getNames(json.getAsJsonArray("versions"))
+                        .stream()
+                        .map(StringUtil::toEnumName)
+                        .map(Version::valueOf)
+                        .toArray(Version[]::new),
+                NamedResource.getNames(json.getAsJsonArray("move_learn_methods"))
+                        .stream()
+                        .map(StringUtil::toEnumName)
+                        .map(MoveLearnMethod::valueOf)
+                        .collect(Collectors.toList())
         );
     }
 

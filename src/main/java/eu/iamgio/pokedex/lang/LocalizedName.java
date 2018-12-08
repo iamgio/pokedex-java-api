@@ -2,6 +2,7 @@ package eu.iamgio.pokedex.lang;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import eu.iamgio.pokedex.util.NamedResource;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -31,7 +32,7 @@ public class LocalizedName {
     public LocalizedName(JsonObject json, String key) {
         this(
                 json.get(key).getAsString(),
-                Language.fromName(json.get("language").getAsJsonObject().get("name").getAsString())
+                Language.fromName(new NamedResource(json.get("language").getAsJsonObject()).getName())
         );
     }
 

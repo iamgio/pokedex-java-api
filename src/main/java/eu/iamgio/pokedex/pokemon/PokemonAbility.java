@@ -7,6 +7,8 @@ import eu.iamgio.pokedex.exception.PokedexException;
 import eu.iamgio.pokedex.lang.LocalizedName;
 import eu.iamgio.pokedex.lang.LocalizedNameList;
 import eu.iamgio.pokedex.lang.LocalizedNames;
+import eu.iamgio.pokedex.util.NamedResource;
+import eu.iamgio.pokedex.util.StringUtil;
 import eu.iamgio.pokedex.version.VersionGroup;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -66,7 +68,7 @@ public class PokemonAbility {
                 json.get("id").getAsInt(),
                 json.get("name").getAsString(),
                 json.get("is_main_series").getAsBoolean(),
-                Generation.valueOf(json.get("generation").getAsJsonObject().get("name").getAsString().replace("-", "_").toUpperCase()),
+                Generation.valueOf(StringUtil.toEnumName(new NamedResource(json.get("generation").getAsJsonObject()).getName())),
                 new LocalizedNames(json.getAsJsonArray("names"), "name"),
                 new LocalizedNameList<>(json.getAsJsonArray("flavor_text_entries"), "flavor_text", Flavor.class)
         );
@@ -94,9 +96,8 @@ public class PokemonAbility {
          */
         public Flavor(JsonObject json) {
             super(json, "flavor_text");
-            this.group = VersionGroup.valueOf(json.get("version_group").getAsJsonObject()
-                    .get("name").getAsString()
-                    .replace("-", "_").toUpperCase());
+            this.group = VersionGroup.valueOf(StringUtil.toEnumName(json.get("version_group").getAsJsonObject()
+                    .get("name").getAsString()));
         }
 
         @Override
