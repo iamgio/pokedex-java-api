@@ -7,9 +7,9 @@
 # Pokédex Java API
 _pokedex-java-api_ is the first wrapper for [pokeapi.co](https://pokeapi.co) written in pure Java.   
 # Why should I use PDJ API?
-[x] Fully documented
-[x] Everything is treaten as an object
-[x] Mantainable and readable code
+[x] Fully documented  
+[x] Everything is treaten as an object  
+[x] Mantainable and readable code  
 
 # Getting started
 
