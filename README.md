@@ -2,7 +2,7 @@
     <img src="https://i.imgur.com/eT8UJl0.png">
 </p>
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/087ddd3689bf4ad08d383f52a9936708)](https://www.codacy.com/app/iAmGio/pokedex-java-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=iAmGio/pokedex-java-api&amp;utm_campaign=Badge_Grade)
+[![Codacy](https://api.codacy.com/project/badge/Grade/087ddd3689bf4ad08d383f52a9936708)](https://www.codacy.com/app/iAmGio/pokedex-java-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=iAmGio/pokedex-java-api&amp;utm_campaign=Badge_Grade) [![CodeFactor](https://www.codefactor.io/repository/github/iamgio/pokedex-java-api/badge)](https://www.codefactor.io/repository/github/iamgio/pokedex-java-api)
 
 # Pokédex Java API
 _pokedex-java-api_ is the first wrapper for [pokeapi.co](https://pokeapi.co) written in pure Java.   
