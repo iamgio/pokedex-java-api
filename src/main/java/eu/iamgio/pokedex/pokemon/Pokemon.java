@@ -4,12 +4,16 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import eu.iamgio.pokedex.connection.HttpConnection;
 import eu.iamgio.pokedex.exception.PokedexException;
+import eu.iamgio.pokedex.util.NamedResource;
+import eu.iamgio.pokedex.util.StringUtil;
+import eu.iamgio.pokedex.version.Version;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -56,6 +60,11 @@ public class Pokemon {
     private PokemonType[] types;
 
     /**
+     * A list of game indices relevent to Pokémon item by generation
+     */
+    private HashMap<Version, Integer> gameIndices;
+
+    /**
      * @param name Name of the Pokémon
      * @return Pokémon whose name matches <tt>name</tt>
      * @throws PokedexException if <tt>name</tt> doesn't match a Pokémon name
@@ -73,6 +82,13 @@ public class Pokemon {
                     .get("type").getAsJsonObject()
                     .get("name").getAsString().toUpperCase()));
         }
+        HashMap<Version, Integer> indices = new HashMap<>();
+        for(JsonElement indice : json.getAsJsonArray("game_indices")) {
+            indices.put(
+                    Version.valueOf(StringUtil.toEnumName(new NamedResource(indice.getAsJsonObject().getAsJsonObject("version")).getName())),
+                    indice.getAsJsonObject().get("game_index").getAsInt()
+            );
+        }
         Collections.reverse(types);
         return new Pokemon(
                 json.get("name").getAsString(),
@@ -81,7 +97,8 @@ public class Pokemon {
                 json.get("height").getAsInt(),
                 json.get("weight").getAsInt(),
                 json.get("base_experience").getAsInt(),
-                types.toArray(new PokemonType[types.size()])
+                types.toArray(new PokemonType[types.size()]),
+                indices
         );
     }
 
