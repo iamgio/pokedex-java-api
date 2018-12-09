@@ -31,6 +31,10 @@ public class PokemonPersonalMove {
      */
     private List<VersionGroupDetail> groupDetails;
 
+    /**
+     * @param json JSON object containing data
+     * @return Parsed JSON into {@link PokemonPersonalMove}
+     */
     public static PokemonPersonalMove fromJson(JsonObject json) {
         JsonArray details = json.getAsJsonArray("version_group_details");
         List<VersionGroupDetail> groupDetails = new ArrayList<>();
@@ -65,7 +69,11 @@ public class PokemonPersonalMove {
          */
         private int levelLearnedAt;
 
-        public static VersionGroupDetail fromJson(JsonObject json) {
+        /**
+         * @param json JSON object containing data
+         * @return Parsed JSON into {@link VersionGroupDetail}
+         */
+        static VersionGroupDetail fromJson(JsonObject json) {
             return new VersionGroupDetail(
                     MoveLearnMethod.valueOf(StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("move_learn_method")).getName())),
                     VersionGroup.valueOf(StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("version_group")).getName())),
