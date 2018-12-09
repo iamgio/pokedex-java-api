@@ -4,8 +4,10 @@ import com.google.gson.JsonObject;
 import eu.iamgio.pokedex.Generation;
 import eu.iamgio.pokedex.connection.HttpConnection;
 import eu.iamgio.pokedex.pokemon.move.MoveLearnMethod;
+import eu.iamgio.pokedex.util.Loadable;
 import eu.iamgio.pokedex.util.NamedResource;
 import eu.iamgio.pokedex.util.StringUtil;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -18,7 +20,7 @@ import java.util.stream.Collectors;
  */
 @AllArgsConstructor
 @Getter
-public enum VersionGroup {
+public enum VersionGroup implements Loadable<VersionGroup.LoadedVersionGroup> {
 
     RED_BLUE(1),
     YELLOW(2),
@@ -47,10 +49,12 @@ public enum VersionGroup {
      * Loads information
      * @return {@link VersionGroup} with additional information
      */
+    @Override
     public LoadedVersionGroup load() {
         JsonObject json = new HttpConnection("version-group/" + id + "/").getJson();
         return new LoadedVersionGroup(
                 id,
+                this,
                 json.get("order").getAsInt(),
                 Generation.fromJson(json),
                 NamedResource.getNames(json.getAsJsonArray("versions"))
@@ -66,7 +70,7 @@ public enum VersionGroup {
         );
     }
 
-    @AllArgsConstructor
+    @AllArgsConstructor(access = AccessLevel.PACKAGE)
     @Getter
     public static class LoadedVersionGroup {
 
@@ -74,6 +78,11 @@ public enum VersionGroup {
          * Identifier of this group
          */
         private int id;
+
+        /**
+         * Version group
+         */
+        private VersionGroup group;
 
         /**
          * Order for sorting. Almost by date of release, except similar versions are grouped together

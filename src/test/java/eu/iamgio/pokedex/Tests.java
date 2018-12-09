@@ -56,6 +56,18 @@ class Tests {
     }
 
     @Test
+    void testGen6() {
+        Generation.LoadedGeneration gen = Generation.GENERATION_VI.load();
+        assertEquals(PokemonType.FAIRY, gen.getTypes().get(0));
+        assertEquals("kalos", gen.getMainRegion());
+        assertEquals(VersionGroup.X_Y, gen.getGroups().get(0));
+        assertEquals(27, gen.getAbilityNames().size());
+        assertEquals(62, gen.getMoveNames().size());
+        assertEquals(72, gen.getPokemonNames().size());
+        assertEquals("Generation VI", gen.getLocalizedNames().get(Language.ENGLISH).getName());
+    }
+
+    @Test
     void testBodySlam() {
         PokemonMove move = PokemonMove.fromName("body-slam");
         assertEquals(100, move.getAccuracy());
