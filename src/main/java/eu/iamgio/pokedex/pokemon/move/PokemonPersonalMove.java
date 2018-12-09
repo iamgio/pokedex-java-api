@@ -50,7 +50,7 @@ public class PokemonPersonalMove {
     /**
      * @return General {@link PokemonMove}
      */
-    public PokemonMove toAbility() {
+    public PokemonMove toMove() {
         return PokemonMove.fromName(name);
     }
 
