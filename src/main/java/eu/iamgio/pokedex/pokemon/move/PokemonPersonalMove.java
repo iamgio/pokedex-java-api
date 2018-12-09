@@ -3,7 +3,6 @@ package eu.iamgio.pokedex.pokemon.move;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import eu.iamgio.pokedex.pokemon.PokemonAbility;
 import eu.iamgio.pokedex.util.NamedResource;
 import eu.iamgio.pokedex.util.StringUtil;
 import eu.iamgio.pokedex.version.VersionGroup;
