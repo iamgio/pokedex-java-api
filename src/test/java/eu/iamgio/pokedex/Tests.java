@@ -5,6 +5,7 @@ import eu.iamgio.pokedex.pokemon.PokemonAbility;
 import eu.iamgio.pokedex.pokemon.PokemonType;
 import eu.iamgio.pokedex.pokemon.Sprite;
 import eu.iamgio.pokedex.pokemon.move.MoveLearnMethod;
+import eu.iamgio.pokedex.pokemon.move.PokemonMove;
 import eu.iamgio.pokedex.pokemon.move.PokemonPersonalMove;
 import eu.iamgio.pokedex.version.Version;
 import eu.iamgio.pokedex.version.VersionGroup;
@@ -53,5 +54,15 @@ class Tests {
         assertEquals(10, group.getOrder());
         assertArrayEquals(new Version[] {Version.DIAMOND, Version.PEARL}, group.getVersions());
         assertNotEquals("[]", group.getMoveLearnMethods());
+    }
+
+    @Test
+    void testBodySlam() {
+        PokemonMove move = PokemonMove.fromName("body-slam");
+        assertEquals(100, move.getAccuracy());
+        assertEquals(30, (int) move.getEffectChance());
+        assertEquals(85, move.getPower());
+        assertEquals(15, move.getPowerPoints());
+        assertEquals(0, move.getPriority());
     }
 }
