@@ -7,8 +7,6 @@ import eu.iamgio.pokedex.exception.PokedexException;
 import eu.iamgio.pokedex.lang.LocalizedNameList;
 import eu.iamgio.pokedex.lang.LocalizedNames;
 import eu.iamgio.pokedex.util.Flavor;
-import eu.iamgio.pokedex.util.NamedResource;
-import eu.iamgio.pokedex.util.StringUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -67,7 +65,7 @@ public class PokemonAbility {
                 json.get("id").getAsInt(),
                 json.get("name").getAsString(),
                 json.get("is_main_series").getAsBoolean(),
-                Generation.valueOf(StringUtil.toEnumName(new NamedResource(json.get("generation").getAsJsonObject()).getName())),
+                Generation.fromJson(json),
                 new LocalizedNames(json.getAsJsonArray("names"), "name"),
                 new LocalizedNameList<>(json.getAsJsonArray("flavor_text_entries"), "flavor_text", Flavor.class)
         );

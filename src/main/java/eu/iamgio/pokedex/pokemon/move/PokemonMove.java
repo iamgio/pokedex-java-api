@@ -2,8 +2,12 @@ package eu.iamgio.pokedex.pokemon.move;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import eu.iamgio.pokedex.Generation;
 import eu.iamgio.pokedex.connection.HttpConnection;
 import eu.iamgio.pokedex.exception.PokedexException;
+import eu.iamgio.pokedex.lang.LocalizedNameList;
+import eu.iamgio.pokedex.lang.LocalizedNames;
+import eu.iamgio.pokedex.util.Flavor;
 import eu.iamgio.pokedex.util.NamedResource;
 import eu.iamgio.pokedex.util.StringUtil;
 import eu.iamgio.pokedex.version.VersionGroup;
@@ -57,9 +61,24 @@ public class PokemonMove {
     private int power;
 
     /**
+     * The generation in which this move was introduced
+     */
+    private Generation generation;
+
+    /**
      * A list of the machines that teach this move as version_group=machine_id
      */
     private HashMap<VersionGroup, Integer> machines;
+
+    /**
+     * The name of this move listed in different languages
+     */
+    private LocalizedNames localizedNames;
+
+    /**
+     * The flavor text of this move listed in different languages.
+     */
+    private LocalizedNameList<Flavor> flavors;
 
     /**
      * @param name Name of the move
@@ -93,7 +112,10 @@ public class PokemonMove {
                 json.get("pp").getAsInt(),
                 json.get("priority").getAsByte(),
                 json.get("power").getAsInt(),
-                machines
+                Generation.fromJson(json),
+                machines,
+                new LocalizedNames(json.getAsJsonArray("names"), "name"),
+                new LocalizedNameList<>(json.getAsJsonArray("flavor_text_entries"), "flavor_text", Flavor.class)
         );
     }
 

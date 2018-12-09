@@ -52,7 +52,7 @@ public enum VersionGroup {
         return new LoadedVersionGroup(
                 id,
                 json.get("order").getAsInt(),
-                Generation.valueOf(StringUtil.toEnumName(new NamedResource(json.get("generation").getAsJsonObject()).getName())),
+                Generation.fromJson(json),
                 NamedResource.getNames(json.getAsJsonArray("versions"))
                         .stream()
                         .map(StringUtil::toEnumName)
