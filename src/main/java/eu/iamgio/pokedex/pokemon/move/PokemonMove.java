@@ -4,9 +4,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import eu.iamgio.pokedex.connection.HttpConnection;
 import eu.iamgio.pokedex.exception.PokedexException;
+import eu.iamgio.pokedex.util.NamedResource;
+import eu.iamgio.pokedex.util.StringUtil;
+import eu.iamgio.pokedex.version.VersionGroup;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.util.HashMap;
 
 /**
  * Represents a move a Pokémon can learn
@@ -52,6 +57,11 @@ public class PokemonMove {
     private int power;
 
     /**
+     * A list of the machines that teach this move as version_group=machine_id
+     */
+    private HashMap<VersionGroup, Integer> machines;
+
+    /**
      * @param name Name of the move
      * @return Move whose name matches <tt>name</tt>
      * @throws PokedexException if <tt>name</tt> doesn't match a move name
@@ -64,6 +74,17 @@ public class PokemonMove {
             throw new PokedexException("Could not find move with name/ID " + name);
         }
         JsonElement effectChance = json.get("effect_chance");
+        HashMap<VersionGroup, Integer> machines = new HashMap<>();
+        for(JsonElement machinesJson : json.getAsJsonArray("machines")) {
+            String url = machinesJson.getAsJsonObject().getAsJsonObject("machine")
+                    .get("url").getAsString();
+            machines.put(
+                    VersionGroup.valueOf(StringUtil.toEnumName(
+                            new NamedResource(machinesJson.getAsJsonObject()
+                                    .get("version_group").getAsJsonObject()).getName())),
+                    Integer.parseInt(url.substring("https://pokeapi.co/api/v2/machine/".length(), url.length() - 1))
+            );
+        }
         return new PokemonMove(
                 json.get("id").getAsInt(),
                 json.get("name").getAsString(),
@@ -71,7 +92,8 @@ public class PokemonMove {
                 effectChance.isJsonNull() ? null : effectChance.getAsInt(),
                 json.get("pp").getAsInt(),
                 json.get("priority").getAsByte(),
-                json.get("power").getAsInt()
+                json.get("power").getAsInt(),
+                machines
         );
     }
 

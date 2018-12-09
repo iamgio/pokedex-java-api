@@ -64,5 +64,6 @@ class Tests {
         assertEquals(85, move.getPower());
         assertEquals(15, move.getPowerPoints());
         assertEquals(0, move.getPriority());
+        assertEquals(120, (int) move.getMachines().get(VersionGroup.RED_BLUE));
     }
 }
