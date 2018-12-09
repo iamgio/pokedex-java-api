@@ -2,7 +2,7 @@ package eu.iamgio.pokedex.lang;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import eu.iamgio.pokedex.pokemon.PokemonAbility;
+import eu.iamgio.pokedex.util.Flavor;
 
 import java.util.ArrayList;
 
@@ -24,9 +24,9 @@ public class LocalizedNameList<T extends LocalizedName> extends ArrayList<T> {
             for(JsonElement json : array) {
                 add((T) new LocalizedName(json.getAsJsonObject(), key));
             }
-        } else if(clazz.isAssignableFrom(PokemonAbility.Flavor.class)) {
+        } else if(clazz.isAssignableFrom(Flavor.class)) {
             for(JsonElement json : array) {
-                add((T) new PokemonAbility.Flavor(json.getAsJsonObject()));
+                add((T) new Flavor(json.getAsJsonObject()));
             }
         }
     }

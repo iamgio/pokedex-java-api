@@ -1,4 +1,4 @@
-package eu.iamgio.pokedex.move;
+package eu.iamgio.pokedex.pokemon.move;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

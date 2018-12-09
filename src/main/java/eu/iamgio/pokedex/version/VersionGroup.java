@@ -3,7 +3,7 @@ package eu.iamgio.pokedex.version;
 import com.google.gson.JsonObject;
 import eu.iamgio.pokedex.Generation;
 import eu.iamgio.pokedex.connection.HttpConnection;
-import eu.iamgio.pokedex.move.MoveLearnMethod;
+import eu.iamgio.pokedex.pokemon.move.MoveLearnMethod;
 import eu.iamgio.pokedex.util.NamedResource;
 import eu.iamgio.pokedex.util.StringUtil;
 import lombok.AllArgsConstructor;

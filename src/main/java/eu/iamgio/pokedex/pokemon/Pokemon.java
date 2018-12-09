@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import eu.iamgio.pokedex.connection.HttpConnection;
 import eu.iamgio.pokedex.exception.PokedexException;
+import eu.iamgio.pokedex.pokemon.move.PokemonPersonalMove;
 import eu.iamgio.pokedex.util.NamedResource;
 import eu.iamgio.pokedex.util.StringUtil;
 import eu.iamgio.pokedex.version.Version;
@@ -65,6 +66,19 @@ public class Pokemon {
     private HashMap<Version, Integer> gameIndices;
 
     /**
+     * A list of types this Pokémon can learn
+     */
+    private List<PokemonPersonalMove> moves;
+
+    /**
+     * @param name Move name
+     * @return {@link PokemonPersonalMove} from name. <tt>null</tt> if this Pokémon isn't able to learn it
+     */
+    public PokemonPersonalMove getMove(String name) {
+        return moves.stream().filter(move -> move.getName().equals(name)).findFirst().orElse(null);
+    }
+
+    /**
      * @param name Name of the Pokémon
      * @return Pokémon whose name matches <tt>name</tt>
      * @throws PokedexException if <tt>name</tt> doesn't match a Pokémon name
@@ -89,6 +103,10 @@ public class Pokemon {
                     indice.getAsJsonObject().get("game_index").getAsInt()
             );
         }
+        List<PokemonPersonalMove> moves = new ArrayList<>();
+        for(JsonElement move : json.getAsJsonArray("moves")) {
+            moves.add(PokemonPersonalMove.fromJson(move.getAsJsonObject()));
+        }
         Collections.reverse(types);
         return new Pokemon(
                 json.get("name").getAsString(),
@@ -98,7 +116,8 @@ public class Pokemon {
                 json.get("weight").getAsInt(),
                 json.get("base_experience").getAsInt(),
                 types.toArray(new PokemonType[types.size()]),
-                indices
+                indices,
+                moves
         );
     }
 

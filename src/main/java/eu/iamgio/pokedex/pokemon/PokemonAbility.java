@@ -4,12 +4,11 @@ import com.google.gson.JsonObject;
 import eu.iamgio.pokedex.Generation;
 import eu.iamgio.pokedex.connection.HttpConnection;
 import eu.iamgio.pokedex.exception.PokedexException;
-import eu.iamgio.pokedex.lang.LocalizedName;
 import eu.iamgio.pokedex.lang.LocalizedNameList;
 import eu.iamgio.pokedex.lang.LocalizedNames;
+import eu.iamgio.pokedex.util.Flavor;
 import eu.iamgio.pokedex.util.NamedResource;
 import eu.iamgio.pokedex.util.StringUtil;
-import eu.iamgio.pokedex.version.VersionGroup;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -81,28 +80,5 @@ public class PokemonAbility {
      */
     public static PokemonAbility fromId(Number id) throws PokedexException {
         return fromName(String.valueOf(id));
-    }
-
-    public static class Flavor extends LocalizedName {
-
-        /**
-         * The version group that uses this flavor text
-         */
-        @Getter private VersionGroup group;
-
-        /**
-         * Loads a {@link LocalizedName} from a JSON
-         * @param json JSON containing a localized name
-         */
-        public Flavor(JsonObject json) {
-            super(json, "flavor_text");
-            this.group = VersionGroup.valueOf(StringUtil.toEnumName(json.get("version_group").getAsJsonObject()
-                    .get("name").getAsString()));
-        }
-
-        @Override
-        public String toString() {
-            return "Flavor{" + language + "=" + name.replace("\n", "\\n") + "; version=" + group + "}";
-        }
     }
 }

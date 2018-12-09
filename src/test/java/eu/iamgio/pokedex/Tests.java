@@ -3,6 +3,8 @@ package eu.iamgio.pokedex;
 import eu.iamgio.pokedex.pokemon.Pokemon;
 import eu.iamgio.pokedex.pokemon.PokemonAbility;
 import eu.iamgio.pokedex.pokemon.PokemonType;
+import eu.iamgio.pokedex.pokemon.move.MoveLearnMethod;
+import eu.iamgio.pokedex.pokemon.move.PokemonPersonalMove;
 import eu.iamgio.pokedex.version.Version;
 import eu.iamgio.pokedex.version.VersionGroup;
 import org.junit.jupiter.api.Test;
@@ -24,6 +26,10 @@ class Tests {
         assertEquals(64, bulbasaur.getBaseExperience());
         assertArrayEquals(new PokemonType[] {PokemonType.GRASS, PokemonType.POISON}, bulbasaur.getTypes());
         assertEquals(153, (int) bulbasaur.getGameIndices().get(Version.YELLOW));
+        PokemonPersonalMove.VersionGroupDetail leechSeed = bulbasaur.getMove("leech-seed").getGroupDetails().get(0);
+        assertEquals(VersionGroup.OMEGA_RUBY_ALPHA_SAPPHIRE, leechSeed.getGroup());
+        assertEquals(MoveLearnMethod.LEVEL_UP, leechSeed.getLearnMethod());
+        assertEquals(7, leechSeed.getLevelLearnedAt());
     }
 
     @Test
