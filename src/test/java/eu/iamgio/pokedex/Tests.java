@@ -3,6 +3,7 @@ package eu.iamgio.pokedex;
 import eu.iamgio.pokedex.pokemon.Pokemon;
 import eu.iamgio.pokedex.pokemon.PokemonAbility;
 import eu.iamgio.pokedex.pokemon.PokemonType;
+import eu.iamgio.pokedex.pokemon.Sprite;
 import eu.iamgio.pokedex.pokemon.move.MoveLearnMethod;
 import eu.iamgio.pokedex.pokemon.move.PokemonPersonalMove;
 import eu.iamgio.pokedex.version.Version;
@@ -26,6 +27,8 @@ class Tests {
         assertEquals(64, bulbasaur.getBaseExperience());
         assertArrayEquals(new PokemonType[] {PokemonType.GRASS, PokemonType.POISON}, bulbasaur.getTypes());
         assertEquals(153, (int) bulbasaur.getGameIndices().get(Version.YELLOW));
+        assertEquals("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+                bulbasaur.getSprite(Sprite.Type.FRONT_DEFAULT).getUrl());
         PokemonPersonalMove.VersionGroupDetail leechSeed = bulbasaur.getMove("leech-seed").getGroupDetails().get(0);
         assertEquals(VersionGroup.OMEGA_RUBY_ALPHA_SAPPHIRE, leechSeed.getGroup());
         assertEquals(MoveLearnMethod.LEVEL_UP, leechSeed.getLearnMethod());

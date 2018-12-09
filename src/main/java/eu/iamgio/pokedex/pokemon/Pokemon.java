@@ -71,11 +71,29 @@ public class Pokemon {
     private List<PokemonPersonalMove> moves;
 
     /**
+     * A set of sprites used to depict this Pokémon in the game
+     */
+    private Sprite[] sprites;
+
+    /**
      * @param name Move name
      * @return {@link PokemonPersonalMove} from name. <tt>null</tt> if this Pokémon isn't able to learn it
      */
     public PokemonPersonalMove getMove(String name) {
         return moves.stream().filter(move -> move.getName().equals(name)).findFirst().orElse(null);
+    }
+
+    /**
+     * @param type Sprite type
+     * @return {@link Sprite} of the specified type
+     */
+    public Sprite getSprite(Sprite.Type type) {
+        for(Sprite sprite : sprites) {
+            if(sprite.getType() == type) {
+                return sprite;
+            }
+        }
+        return null;
     }
 
     /**
@@ -108,6 +126,13 @@ public class Pokemon {
             moves.add(PokemonPersonalMove.fromJson(move.getAsJsonObject()));
         }
         Collections.reverse(types);
+        Sprite[] sprites = new Sprite[Sprite.Type.values().length];
+        JsonObject spritesObject = json.getAsJsonObject("sprites");
+        for(int i = 0; i < Sprite.Type.values().length; i++) {
+            Sprite.Type type = Sprite.Type.values()[i];
+            JsonElement urlElement = spritesObject.get(type.name().toLowerCase());
+            sprites[i] = new Sprite(type, urlElement.isJsonNull() ? null : urlElement.getAsString());
+        }
         return new Pokemon(
                 json.get("name").getAsString(),
                 json.get("id").getAsInt(),
@@ -117,7 +142,8 @@ public class Pokemon {
                 json.get("base_experience").getAsInt(),
                 types.toArray(new PokemonType[types.size()]),
                 indices,
-                moves
+                moves,
+                sprites
         );
     }
 
