@@ -7,6 +7,7 @@ import eu.iamgio.pokedex.connection.HttpConnection;
 import eu.iamgio.pokedex.exception.PokedexException;
 import eu.iamgio.pokedex.lang.LocalizedNameList;
 import eu.iamgio.pokedex.lang.LocalizedNames;
+import eu.iamgio.pokedex.pokemon.PokemonType;
 import eu.iamgio.pokedex.util.Flavor;
 import eu.iamgio.pokedex.util.NamedResource;
 import eu.iamgio.pokedex.util.StringUtil;
@@ -61,6 +62,36 @@ public class PokemonMove {
     private int power;
 
     /**
+     * The elemental type of this move
+     */
+    private PokemonType type;
+
+    /**
+     * The status ailment this move inflicts on its target(s)
+     */
+    private MoveAilment ailment;
+
+    /**
+     * The type of damage the move inflicts on the target(s)
+     */
+    private MoveDamageClass damageClass;
+
+    /**
+     * The category of move this move falls under
+     */
+    private MoveCategory category;
+
+    /**
+     * The likelihood this attack will cause an ailment
+     */
+    private int ailmentChance;
+
+    /**
+     * The type of target that will receive the effects of the attack
+     */
+    private MoveTarget target;
+
+    /**
      * The generation in which this move was introduced
      */
     private Generation generation;
@@ -104,6 +135,7 @@ public class PokemonMove {
                     Integer.parseInt(url.substring("https://pokeapi.co/api/v2/machine/".length(), url.length() - 1))
             );
         }
+        JsonObject meta = json.getAsJsonObject("meta");
         return new PokemonMove(
                 json.get("id").getAsInt(),
                 json.get("name").getAsString(),
@@ -112,6 +144,12 @@ public class PokemonMove {
                 json.get("pp").getAsInt(),
                 json.get("priority").getAsByte(),
                 json.get("power").getAsInt(),
+                PokemonType.valueOf(new NamedResource(json.get("type").getAsJsonObject()).getName().toUpperCase()),
+                MoveAilment.valueOf(StringUtil.toEnumName(new NamedResource(meta.get("ailment").getAsJsonObject()).getName())),
+                MoveDamageClass.valueOf(new NamedResource(json.get("damage_class").getAsJsonObject()).getName().toUpperCase()),
+                MoveCategory.valueOf(StringUtil.toEnumName(new NamedResource(meta.get("category").getAsJsonObject()).getName()).replace("+", "_AND_")),
+                meta.get("ailment_chance").getAsInt(),
+                MoveTarget.valueOf(StringUtil.toEnumName(new NamedResource(json.get("target").getAsJsonObject()).getName())),
                 Generation.fromJson(json),
                 machines,
                 new LocalizedNames(json.getAsJsonArray("names"), "name"),

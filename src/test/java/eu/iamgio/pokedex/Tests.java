@@ -1,12 +1,11 @@
 package eu.iamgio.pokedex;
 
+import eu.iamgio.pokedex.lang.Language;
 import eu.iamgio.pokedex.pokemon.Pokemon;
 import eu.iamgio.pokedex.pokemon.PokemonAbility;
 import eu.iamgio.pokedex.pokemon.PokemonType;
 import eu.iamgio.pokedex.pokemon.Sprite;
-import eu.iamgio.pokedex.pokemon.move.MoveLearnMethod;
-import eu.iamgio.pokedex.pokemon.move.PokemonMove;
-import eu.iamgio.pokedex.pokemon.move.PokemonPersonalMove;
+import eu.iamgio.pokedex.pokemon.move.*;
 import eu.iamgio.pokedex.version.Version;
 import eu.iamgio.pokedex.version.VersionGroup;
 import org.junit.jupiter.api.Test;
@@ -65,5 +64,14 @@ class Tests {
         assertEquals(15, move.getPowerPoints());
         assertEquals(0, move.getPriority());
         assertEquals(120, (int) move.getMachines().get(VersionGroup.RED_BLUE));
+        assertEquals(Generation.GENERATION_I, move.getGeneration());
+        assertNotEquals("[]", move.getFlavors().toString());
+        assertEquals("Body Slam", move.getLocalizedNames().get(Language.ENGLISH).getName());
+        assertEquals(PokemonType.NORMAL, move.getType());
+        assertEquals(MoveAilment.PARALYSIS, move.getAilment());
+        assertEquals(30, move.getAilmentChance());
+        assertEquals(MoveTarget.SELECTED_POKEMON, move.getTarget());
+        assertEquals(MoveCategory.DAMAGE_AND_AILMENT, move.getCategory());
+        assertEquals(MoveDamageClass.PHYSICAL, move.getDamageClass());
     }
 }
