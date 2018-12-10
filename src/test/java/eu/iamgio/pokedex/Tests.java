@@ -85,5 +85,6 @@ class Tests {
         assertEquals(MoveTarget.SELECTED_POKEMON, move.getTarget());
         assertEquals(MoveCategory.DAMAGE_AND_AILMENT, move.getCategory());
         assertEquals(MoveDamageClass.PHYSICAL, move.getDamageClass());
+        assertEquals(0, move.getStatChanges().size());
     }
 }

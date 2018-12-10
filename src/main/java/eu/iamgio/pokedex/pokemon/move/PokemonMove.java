@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Represents a move a Pokémon can learn
@@ -102,6 +103,11 @@ public class PokemonMove {
     private HashMap<VersionGroup, Integer> machines;
 
     /**
+     * A list of stats this moves effects and how much it effects them
+     */
+    private List<MoveStatChange> statChanges;
+
+    /**
      * The name of this move listed in different languages
      */
     private LocalizedNames localizedNames;
@@ -152,6 +158,7 @@ public class PokemonMove {
                 MoveTarget.valueOf(StringUtil.toEnumName(new NamedResource(json.get("target").getAsJsonObject()).getName())),
                 Generation.fromJson(json),
                 machines,
+                MoveStatChange.fromJson(json.getAsJsonArray("stat_changes")),
                 new LocalizedNames(json.getAsJsonArray("names"), "name"),
                 new LocalizedNameList<>(json.getAsJsonArray("flavor_text_entries"), "flavor_text", Flavor.class)
         );
