@@ -5,6 +5,9 @@ import eu.iamgio.pokedex.pokemon.Pokemon;
 import eu.iamgio.pokedex.pokemon.PokemonAbility;
 import eu.iamgio.pokedex.pokemon.PokemonType;
 import eu.iamgio.pokedex.pokemon.Sprite;
+import eu.iamgio.pokedex.pokemon.encounter.Encounter;
+import eu.iamgio.pokedex.pokemon.encounter.EncounterConditionValue;
+import eu.iamgio.pokedex.pokemon.encounter.EncounterMethod;
 import eu.iamgio.pokedex.pokemon.move.*;
 import eu.iamgio.pokedex.version.Version;
 import eu.iamgio.pokedex.version.VersionGroup;
@@ -86,5 +89,20 @@ class Tests {
         assertEquals(MoveCategory.DAMAGE_AND_AILMENT, move.getCategory());
         assertEquals(MoveDamageClass.PHYSICAL, move.getDamageClass());
         assertEquals(0, move.getStatChanges().size());
+    }
+
+    @Test
+    void testStarlyEncounter() {
+        Encounter encounter = Encounter.fromPokemonName("starly").get(0);
+        assertEquals("great-marsh-area-1", encounter.getLocationArea());
+        Encounter.VersionDetail versionDetail = encounter.getDetails().get(0);
+        assertEquals(20, versionDetail.getMaxChance());
+        assertEquals(Version.DIAMOND, versionDetail.getVersion());
+        Encounter.EncounterDetail encounterDetail = versionDetail.getEncounterDetails().get(0);
+        assertEquals(10, encounterDetail.getChance());
+        assertEquals(26, encounterDetail.getMaxLevel());
+        assertEquals(26, encounterDetail.getMinLevel());
+        assertEquals(EncounterMethod.WALK, encounterDetail.getMethod());
+        assertEquals(EncounterConditionValue.TIME_MORNING, encounterDetail.getConditionValues().get(0));
     }
 }

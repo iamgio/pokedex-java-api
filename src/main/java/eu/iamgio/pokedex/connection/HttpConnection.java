@@ -1,8 +1,10 @@
 package eu.iamgio.pokedex.connection;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import lombok.Getter;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -18,7 +20,7 @@ public class HttpConnection {
 
     private static final String PREFIX = "https://pokeapi.co/api/v2/";
 
-    private String url;
+    @Getter private String url;
 
     public HttpConnection(String url) {
         this.url = PREFIX + url;
@@ -57,5 +59,16 @@ public class HttpConnection {
         JsonReader reader = new JsonReader(new StringReader(read()));
         reader.setLenient(true);
         return new JsonParser().parse(reader).getAsJsonObject();
+    }
+
+    /**
+     * Parses website content to JSON array
+     * @return Parsed JSON array
+     * @throws RuntimeException if an error occurred
+     */
+    public JsonArray getJsonArray() throws RuntimeException {
+        JsonReader reader = new JsonReader(new StringReader(read()));
+        reader.setLenient(true);
+        return new JsonParser().parse(reader).getAsJsonArray();
     }
 }
