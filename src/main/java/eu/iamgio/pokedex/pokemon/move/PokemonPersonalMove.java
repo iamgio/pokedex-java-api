@@ -80,7 +80,7 @@ public class PokemonPersonalMove {
          * @param json JSON object containing data
          * @return Parsed JSON into {@link VersionGroupDetail}
          */
-        static VersionGroupDetail fromJson(JsonObject json) {
+        private static VersionGroupDetail fromJson(JsonObject json) {
             return new VersionGroupDetail(
                     MoveLearnMethod.valueOf(StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("move_learn_method")).getName())),
                     VersionGroup.valueOf(StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("version_group")).getName())),
