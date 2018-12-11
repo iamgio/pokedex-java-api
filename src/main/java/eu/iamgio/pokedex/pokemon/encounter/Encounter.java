@@ -33,6 +33,11 @@ public class Encounter {
 
     private List<VersionDetail> details;
 
+    /**
+     * @param pokemonName Name of the Pokémon
+     * @return Encounter of Pokémon whose name matches <tt>name</tt>
+     * @throws PokedexException if <tt>name</tt> doesn't match a Pokémon name
+     */
     public static List<Encounter> fromPokemonName(String pokemonName) throws PokedexException {
         JsonArray json;
         try {
@@ -66,10 +71,20 @@ public class Encounter {
         return encounters;
     }
 
+    /**
+     * @param pokemonId Identifier of the Pokémon
+     * @return Encounter of Pokémon whose ID matches <tt>id</tt>
+     * @throws PokedexException if <tt>id</tt> is 0 or less or doesn't match a Pokémon ID
+     */
     public static List<Encounter> fromPokemonId(Number pokemonId) throws PokedexException {
         return fromPokemonName(String.valueOf(pokemonId));
     }
 
+    /**
+     * @param pokemon Pokémon
+     * @return Encounter of Pokémon
+     * @throws PokedexException if an error occurred
+     */
     public static List<Encounter> fromPokemon(Pokemon pokemon) throws PokedexException {
         return fromPokemonId(pokemon.getId());
     }
