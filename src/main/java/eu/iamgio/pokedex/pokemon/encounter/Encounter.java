@@ -148,7 +148,7 @@ public class Encounter {
          * @param json JSON object containing data
          * @return Parsed JSON into {@link EncounterDetail}
          */
-        public static EncounterDetail fromJson(JsonObject json) {
+        private static EncounterDetail fromJson(JsonObject json) {
             return new EncounterDetail(
                     json.get("chance").getAsInt(),
                     NamedResource.getNames(json.getAsJsonArray("condition_values"))
