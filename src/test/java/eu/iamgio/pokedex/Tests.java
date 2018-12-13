@@ -1,10 +1,7 @@
 package eu.iamgio.pokedex;
 
 import eu.iamgio.pokedex.lang.Language;
-import eu.iamgio.pokedex.pokemon.Pokemon;
-import eu.iamgio.pokedex.pokemon.PokemonAbility;
-import eu.iamgio.pokedex.pokemon.PokemonType;
-import eu.iamgio.pokedex.pokemon.Sprite;
+import eu.iamgio.pokedex.pokemon.*;
 import eu.iamgio.pokedex.pokemon.encounter.Encounter;
 import eu.iamgio.pokedex.pokemon.encounter.EncounterConditionValue;
 import eu.iamgio.pokedex.pokemon.encounter.EncounterMethod;
@@ -36,6 +33,8 @@ class Tests {
         assertEquals(VersionGroup.OMEGA_RUBY_ALPHA_SAPPHIRE, leechSeed.getGroup());
         assertEquals(MoveLearnMethod.LEVEL_UP, leechSeed.getLearnMethod());
         assertEquals(7, leechSeed.getLevelLearnedAt());
+        assertEquals(6, bulbasaur.getStats().length);
+        assertEquals(45, bulbasaur.getStat(Stat.Type.SPEED).getBaseStat());
     }
 
     @Test

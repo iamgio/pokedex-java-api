@@ -29,7 +29,7 @@ public class MoveStatChange {
     /**
      * The stat being affected
      */
-    private Stat stat;
+    private Stat.Type stat;
 
     /**
      * @param json JSON array containing data
@@ -41,7 +41,7 @@ public class MoveStatChange {
             JsonObject obj = change.getAsJsonObject();
             changes.add(new MoveStatChange(
                     obj.get("change").getAsInt(),
-                    Stat.valueOf(StringUtil.toEnumName(new NamedResource(obj.getAsJsonObject("stat")).getName()))
+                    Stat.Type.valueOf(StringUtil.toEnumName(new NamedResource(obj.getAsJsonObject("stat")).getName()))
             ));
         }
         return changes;

@@ -1,5 +1,6 @@
 package eu.iamgio.pokedex.pokemon;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import eu.iamgio.pokedex.connection.HttpConnection;
@@ -12,10 +13,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents a Pokémon from the Pokédex
@@ -71,6 +69,11 @@ public class Pokemon {
     private List<PokemonPersonalMove> moves;
 
     /**
+     * A list of base stat values for this Pokémon
+     */
+    private Stat[] stats;
+
+    /**
      * A set of sprites used to depict this Pokémon in the game
      */
     private Sprite[] sprites;
@@ -81,6 +84,19 @@ public class Pokemon {
      */
     public PokemonPersonalMove getMove(String name) {
         return moves.stream().filter(move -> move.getName().equals(name)).findFirst().orElse(null);
+    }
+
+    /**
+     * @param type Stat type
+     * @return {@link Stat} of the specified type
+     */
+    public Stat getStat(Stat.Type type) {
+        for(Stat stat : stats) {
+            if(stat.getType() == type) {
+                return stat;
+            }
+        }
+        return null;
     }
 
     /**
@@ -126,6 +142,16 @@ public class Pokemon {
             moves.add(PokemonPersonalMove.fromJson(move.getAsJsonObject()));
         }
         Collections.reverse(types);
+        JsonArray statsArray = json.getAsJsonArray("stats");
+        Stat[] stats = new Stat[statsArray.size()];
+        for(int i = 0; i < statsArray.size(); i++) {
+            JsonObject stat = statsArray.get(i).getAsJsonObject();
+            stats[i] = new Stat(
+                    Stat.Type.valueOf(StringUtil.toEnumName(new NamedResource(stat.getAsJsonObject("stat")).getName())),
+                    stat.get("effort").getAsInt(),
+                    stat.get("base_stat").getAsInt()
+            );
+        }
         Sprite[] sprites = new Sprite[Sprite.Type.values().length];
         JsonObject spritesObject = json.getAsJsonObject("sprites");
         for(int i = 0; i < Sprite.Type.values().length; i++) {
@@ -143,6 +169,7 @@ public class Pokemon {
                 types.toArray(new PokemonType[types.size()]),
                 indices,
                 moves,
+                stats,
                 sprites
         );
     }
