@@ -1,6 +1,7 @@
 package eu.iamgio.pokedex;
 
 import eu.iamgio.pokedex.lang.Language;
+import eu.iamgio.pokedex.pokedex.Pokedex;
 import eu.iamgio.pokedex.pokemon.*;
 import eu.iamgio.pokedex.pokemon.encounter.Encounter;
 import eu.iamgio.pokedex.pokemon.encounter.EncounterConditionValue;
@@ -26,7 +27,7 @@ class Tests {
         assertEquals(69, bulbasaur.getWeight());
         assertEquals(64, bulbasaur.getBaseExperience());
         assertArrayEquals(new PokemonType[] {PokemonType.GRASS, PokemonType.POISON}, bulbasaur.getTypes());
-        assertEquals(153, (int) bulbasaur.getGameIndices().get(Version.YELLOW));
+        assertEquals(153, bulbasaur.getGameIndices().get(Version.YELLOW).intValue());
         assertEquals("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
                 bulbasaur.getSprite(Sprite.Type.FRONT_DEFAULT).getUrl());
         PokemonPersonalMove.VersionGroupDetail leechSeed = bulbasaur.getMove("leech-seed").getGroupDetails().get(0);
@@ -73,11 +74,11 @@ class Tests {
     void testBodySlam() {
         PokemonMove move = PokemonMove.fromName("body-slam");
         assertEquals(100, move.getAccuracy());
-        assertEquals(30, (int) move.getEffectChance());
+        assertEquals(30, move.getEffectChance().intValue());
         assertEquals(85, move.getPower());
         assertEquals(15, move.getPowerPoints());
         assertEquals(0, move.getPriority());
-        assertEquals(120, (int) move.getMachines().get(VersionGroup.RED_BLUE));
+        assertEquals(120, move.getMachines().get(VersionGroup.RED_BLUE).intValue());
         assertEquals(Generation.GENERATION_I, move.getGeneration());
         assertNotEquals("[]", move.getFlavors().toString());
         assertEquals("Body Slam", move.getLocalizedNames().get(Language.ENGLISH).getName());
@@ -103,5 +104,22 @@ class Tests {
         assertEquals(26, encounterDetail.getMinLevel());
         assertEquals(EncounterMethod.WALK, encounterDetail.getMethod());
         assertEquals(EncounterConditionValue.TIME_MORNING, encounterDetail.getConditionValues().get(0));
+    }
+
+    @Test
+    void testPikachuSpecies() {
+        PokemonSpecies species = PokemonSpecies.fromPokemonName("pikachu");
+        assertEquals(25, species.getId());
+        assertEquals(70, species.getBaseHappiness());
+        assertEquals(190, species.getCaptureRate());
+        assertEquals(26, species.getOrder());
+        assertEquals(10, species.getHatchCounter());
+        assertEquals(4, species.getGenderRate());
+        assertEquals(false, species.isBaby());
+        assertEquals(false, species.isFormsSwitchable());
+        assertEquals(true, species.hasGenderDifferences());
+        assertEquals(2, species.getEggGroups().size());
+        assertEquals(EggGroup.FAIRY, species.getEggGroups().get(0));
+        assertEquals(163, species.getPokedexNumbers().get(Pokedex.Type.UPDATED_HOENN).intValue());
     }
 }
