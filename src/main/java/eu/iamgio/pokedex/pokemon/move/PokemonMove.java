@@ -115,7 +115,7 @@ public class PokemonMove {
     /**
      * The flavor text of this move listed in different languages.
      */
-    private LocalizedNameList<Flavor> flavors;
+    private LocalizedNameList<Flavor<VersionGroup>> flavors;
 
     /**
      * @param name Name of the move
@@ -160,7 +160,7 @@ public class PokemonMove {
                 machines,
                 MoveStatChange.fromJson(json.getAsJsonArray("stat_changes")),
                 new LocalizedNames(json.getAsJsonArray("names"), "name"),
-                new LocalizedNameList<>(json.getAsJsonArray("flavor_text_entries"), "flavor_text", Flavor.class)
+                new LocalizedNameList<>(json.getAsJsonArray("flavor_text_entries"), "flavor_text", (byte) 0)
         );
     }
 

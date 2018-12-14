@@ -4,9 +4,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import eu.iamgio.pokedex.connection.HttpConnection;
 import eu.iamgio.pokedex.exception.PokedexException;
+import eu.iamgio.pokedex.lang.LocalizedNameList;
+import eu.iamgio.pokedex.lang.LocalizedNames;
 import eu.iamgio.pokedex.pokedex.Pokedex;
+import eu.iamgio.pokedex.util.Flavor;
 import eu.iamgio.pokedex.util.NamedResource;
 import eu.iamgio.pokedex.util.StringUtil;
+import eu.iamgio.pokedex.version.Version;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -84,6 +88,16 @@ public class PokemonSpecies {
      */
     private List<EggGroup> eggGroups;
 
+    /**
+     * The name of this resource listed in different languages
+     */
+    private LocalizedNames localizedNames;
+
+    /**
+     * A list of flavor text entries for this Pokémon species
+     */
+    private LocalizedNameList<Flavor<Version>> flavors;
+
     //TODO others
 
     /**
@@ -129,7 +143,9 @@ public class PokemonSpecies {
                     .stream()
                     .map(StringUtil::toEnumName)
                     .map(EggGroup::valueOf)
-                    .collect(Collectors.toList())
+                    .collect(Collectors.toList()),
+                new LocalizedNames(json.getAsJsonArray("names"), "name"),
+                new LocalizedNameList<>(json.getAsJsonArray("flavor_text_entries"), "flavor_text", (byte) 1)
         );
     }
 

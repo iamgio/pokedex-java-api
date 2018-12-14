@@ -121,5 +121,8 @@ class Tests {
         assertEquals(2, species.getEggGroups().size());
         assertEquals(EggGroup.FAIRY, species.getEggGroups().get(0));
         assertEquals(163, species.getPokedexNumbers().get(Pokedex.Type.UPDATED_HOENN).intValue());
+        assertEquals("Pikachu", species.getLocalizedNames().get(Language.ENGLISH).getName());
+        assertEquals(true, species.getFlavors().get(Language.ENGLISH).getName().startsWith("It’s in"));
+        assertEquals(Version.MOON, species.getFlavors().get(Language.ENGLISH).getVersion());
     }
 }

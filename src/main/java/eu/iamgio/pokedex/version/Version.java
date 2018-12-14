@@ -9,7 +9,7 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public enum Version {
+public enum Version implements IVersion {
 
     RED(1, VersionGroup.RED_BLUE),
     BLUE(2, VersionGroup.RED_BLUE),

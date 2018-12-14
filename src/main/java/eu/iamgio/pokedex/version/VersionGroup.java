@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  */
 @AllArgsConstructor
 @Getter
-public enum VersionGroup implements Loadable<VersionGroup.LoadedVersionGroup> {
+public enum VersionGroup implements Loadable<VersionGroup.LoadedVersionGroup>, IVersion {
 
     RED_BLUE(1),
     YELLOW(2),

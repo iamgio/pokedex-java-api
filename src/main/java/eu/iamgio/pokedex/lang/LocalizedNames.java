@@ -9,7 +9,7 @@ import com.google.gson.JsonArray;
 public class LocalizedNames extends LocalizedNameList<LocalizedName> {
 
     public LocalizedNames(JsonArray array, String key) {
-        super(array, key, LocalizedName.class);
+        super(array, key, (byte) -1);
     }
 
     public LocalizedNames() {}
