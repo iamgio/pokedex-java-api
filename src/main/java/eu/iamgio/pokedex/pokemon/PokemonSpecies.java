@@ -2,11 +2,13 @@ package eu.iamgio.pokedex.pokemon;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import eu.iamgio.pokedex.Generation;
 import eu.iamgio.pokedex.connection.HttpConnection;
 import eu.iamgio.pokedex.exception.PokedexException;
 import eu.iamgio.pokedex.lang.LocalizedNameList;
 import eu.iamgio.pokedex.lang.LocalizedNames;
 import eu.iamgio.pokedex.pokedex.Pokedex;
+import eu.iamgio.pokedex.pokemon.encounter.PalParkEncounter;
 import eu.iamgio.pokedex.util.Flavor;
 import eu.iamgio.pokedex.util.NamedResource;
 import eu.iamgio.pokedex.util.StringUtil;
@@ -15,6 +17,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -84,9 +87,44 @@ public class PokemonSpecies {
     private HashMap<Pokedex.Type, Integer> pokedexNumbers;
 
     /**
+     * The generation this Pokémon species was introduced in
+     */
+    private Generation generation;
+
+    /**
+     * Name of the Pokémon species that evolves into this Pokemon species
+     */
+    private String evolvesFromSpeciesName;
+
+    /**
+     * The habitat this Pokémon species can be encountered in
+     */
+    private PokemonHabitat habitat;
+
+    /**
      * A list of egg groups this Pokémon species is a member of
      */
     private List<EggGroup> eggGroups;
+
+    /**
+     * The color of this Pokémon for Pokédex search
+     */
+    private PokemonColor color;
+
+    /**
+     * The shape of this Pokémon for Pokédex search
+     */
+    private PokemonShape shape;
+
+    /**
+     * A list of the Pokémon that exist within this Pokémon species
+     */
+    private List<PokemonSpeciesVariety> varieties;
+
+    /**
+     * A list of encounters that can be had with this Pokémon species in pal park
+     */
+    private List<PalParkEncounter> palParkEncounters;
 
     /**
      * The name of this resource listed in different languages
@@ -97,6 +135,11 @@ public class PokemonSpecies {
      * A list of flavor text entries for this Pokémon species
      */
     private LocalizedNameList<Flavor<Version>> flavors;
+
+    /**
+     * The genus of this Pokémon species listed in multiple languages
+     */
+    private LocalizedNames genera;
 
     //TODO others
 
@@ -127,6 +170,13 @@ public class PokemonSpecies {
                     pokedexObj.get("entry_number").getAsInt()
             );
         }
+        List<PokemonSpeciesVariety> varieties = new ArrayList<>();
+        for(JsonElement variety : json.getAsJsonArray("varieties")) {
+            varieties.add(new PokemonSpeciesVariety(
+                    new NamedResource(variety.getAsJsonObject().getAsJsonObject("pokemon")).getName(),
+                    variety.getAsJsonObject().get("is_default").getAsBoolean()
+            ));
+        }
         return new PokemonSpecies(
                 json.get("id").getAsInt(),
                 json.get("order").getAsInt(),
@@ -139,13 +189,21 @@ public class PokemonSpecies {
                 json.get("forms_switchable").getAsBoolean(),
                 GrowthRate.valueOf(StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("growth_rate")).getName())),
                 pokedexNumbers,
+                Generation.fromJson(json),
+                new NamedResource(json.getAsJsonObject("evolves_from_species")).getName(),
+                PokemonHabitat.valueOf(StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("habitat")).getName())),
                 NamedResource.getNames(json.getAsJsonArray("egg_groups"))
                     .stream()
                     .map(StringUtil::toEnumName)
                     .map(EggGroup::valueOf)
                     .collect(Collectors.toList()),
+                PokemonColor.valueOf(new NamedResource(json.getAsJsonObject("color")).getName().toUpperCase()),
+                PokemonShape.valueOf(StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("shape")).getName())),
+                varieties,
+                PalParkEncounter.fromJson(json.getAsJsonArray("pal_park_encounters")),
                 new LocalizedNames(json.getAsJsonArray("names"), "name"),
-                new LocalizedNameList<>(json.getAsJsonArray("flavor_text_entries"), "flavor_text", (byte) 1)
+                new LocalizedNameList<>(json.getAsJsonArray("flavor_text_entries"), "flavor_text", (byte) 1),
+                new LocalizedNames(json.getAsJsonArray("genera"), "genus")
         );
     }
 

@@ -1,11 +1,13 @@
 package eu.iamgio.pokedex;
 
 import eu.iamgio.pokedex.lang.Language;
+import eu.iamgio.pokedex.location.PalParkArea;
 import eu.iamgio.pokedex.pokedex.Pokedex;
 import eu.iamgio.pokedex.pokemon.*;
 import eu.iamgio.pokedex.pokemon.encounter.Encounter;
 import eu.iamgio.pokedex.pokemon.encounter.EncounterConditionValue;
 import eu.iamgio.pokedex.pokemon.encounter.EncounterMethod;
+import eu.iamgio.pokedex.pokemon.encounter.PalParkEncounter;
 import eu.iamgio.pokedex.pokemon.move.*;
 import eu.iamgio.pokedex.version.Version;
 import eu.iamgio.pokedex.version.VersionGroup;
@@ -124,5 +126,19 @@ class Tests {
         assertEquals("Pikachu", species.getLocalizedNames().get(Language.ENGLISH).getName());
         assertEquals(true, species.getFlavors().get(Language.ENGLISH).getName().startsWith("It’s in"));
         assertEquals(Version.MOON, species.getFlavors().get(Language.ENGLISH).getVersion());
+        assertEquals(PokemonColor.YELLOW, species.getColor());
+        assertEquals(PokemonShape.QUADRUPED, species.getShape());
+        assertEquals(Generation.GENERATION_I, species.getGeneration());
+        assertEquals(PokemonHabitat.FOREST, species.getHabitat());
+        assertEquals("pichu", species.getEvolvesFromSpeciesName());
+        assertEquals("Mouse Pokémon", species.getGenera().get(Language.ENGLISH).getName());
+        assertEquals(13, species.getVarieties().size());
+        PokemonSpeciesVariety variety = species.getVarieties().get(1);
+        assertEquals(false, variety.isDefault());
+        assertEquals("pikachu-rock-star", variety.getName());
+        PalParkEncounter encounter = species.getPalParkEncounters().get(0);
+        assertEquals(PalParkArea.FOREST, encounter.getArea());
+        assertEquals(80, encounter.getBaseScore());
+        assertEquals(10, encounter.getRate());
     }
 }
