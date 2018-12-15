@@ -17,6 +17,7 @@ public class LocalizedNameList<T extends LocalizedName> extends ArrayList<T> {
      * Loads a list of {@link LocalizedName} from JSON
      * @param array JSON array containing localized names
      * @param key Name of the JSON key
+     * @param flavor -1 if not a flavor. 0 if flavor based on version groups. 1 if flavor based on versions
      */
     public LocalizedNameList(JsonArray array, String key, byte flavor) {
         this();
