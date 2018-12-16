@@ -126,7 +126,8 @@ class Tests {
         assertEquals(EggGroup.FAIRY, species.getEggGroups().get(0));
         assertEquals(163, species.getPokedexNumbers().get(Pokedex.Type.UPDATED_HOENN).intValue());
         assertEquals("Pikachu", species.getLocalizedNames().get(Language.ENGLISH).getName());
-        assertEquals(true, species.getFlavors().get(Language.ENGLISH).getName().startsWith("It’s in"));
+        assertEquals(true, species.getFlavors()
+                .filterVersion(Version.ALPHA_SAPPHIRE).get(Language.ENGLISH).getName().startsWith("This Pokémon"));
         assertEquals(Version.MOON, species.getFlavors().get(Language.ENGLISH).getVersion());
         assertEquals(PokemonColor.YELLOW, species.getColor());
         assertEquals(PokemonShape.QUADRUPED, species.getShape());

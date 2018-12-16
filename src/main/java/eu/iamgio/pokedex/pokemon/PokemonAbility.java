@@ -4,9 +4,8 @@ import com.google.gson.JsonObject;
 import eu.iamgio.pokedex.Generation;
 import eu.iamgio.pokedex.connection.HttpConnection;
 import eu.iamgio.pokedex.exception.PokedexException;
-import eu.iamgio.pokedex.lang.LocalizedNameList;
+import eu.iamgio.pokedex.lang.FlavorList;
 import eu.iamgio.pokedex.lang.LocalizedNames;
-import eu.iamgio.pokedex.util.Flavor;
 import eu.iamgio.pokedex.version.VersionGroup;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -48,7 +47,7 @@ public class PokemonAbility {
     /**
      * The flavor text of this ability listed in different languages.
      */
-    private LocalizedNameList<Flavor<VersionGroup>> flavors;
+    private FlavorList<VersionGroup> flavors;
 
     /**
      * @param name Name of the ability
@@ -68,7 +67,7 @@ public class PokemonAbility {
                 json.get("is_main_series").getAsBoolean(),
                 Generation.fromJson(json),
                 new LocalizedNames(json.getAsJsonArray("names"), "name"),
-                new LocalizedNameList<>(json.getAsJsonArray("flavor_text_entries"), "flavor_text", (byte) 0)
+                new FlavorList<>(json.getAsJsonArray("flavor_text_entries"), "flavor_text", true)
         );
     }
 

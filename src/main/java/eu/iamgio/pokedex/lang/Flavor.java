@@ -1,7 +1,8 @@
-package eu.iamgio.pokedex.util;
+package eu.iamgio.pokedex.lang;
 
 import com.google.gson.JsonObject;
-import eu.iamgio.pokedex.lang.LocalizedName;
+import eu.iamgio.pokedex.util.NamedResource;
+import eu.iamgio.pokedex.util.StringUtil;
 import eu.iamgio.pokedex.version.IVersion;
 import eu.iamgio.pokedex.version.Version;
 import eu.iamgio.pokedex.version.VersionGroup;

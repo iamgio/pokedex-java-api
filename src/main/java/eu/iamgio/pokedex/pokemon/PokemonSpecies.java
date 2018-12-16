@@ -5,11 +5,10 @@ import com.google.gson.JsonObject;
 import eu.iamgio.pokedex.Generation;
 import eu.iamgio.pokedex.connection.HttpConnection;
 import eu.iamgio.pokedex.exception.PokedexException;
-import eu.iamgio.pokedex.lang.LocalizedNameList;
+import eu.iamgio.pokedex.lang.FlavorList;
 import eu.iamgio.pokedex.lang.LocalizedNames;
 import eu.iamgio.pokedex.pokedex.Pokedex;
 import eu.iamgio.pokedex.pokemon.encounter.PalParkEncounter;
-import eu.iamgio.pokedex.util.Flavor;
 import eu.iamgio.pokedex.util.NamedResource;
 import eu.iamgio.pokedex.util.StringUtil;
 import eu.iamgio.pokedex.version.Version;
@@ -134,7 +133,7 @@ public class PokemonSpecies {
     /**
      * A list of flavor text entries for this Pokémon species
      */
-    private LocalizedNameList<Flavor<Version>> flavors;
+    private FlavorList<Version> flavors;
 
     /**
      * The genus of this Pokémon species listed in multiple languages
@@ -201,7 +200,7 @@ public class PokemonSpecies {
                 varieties,
                 PalParkEncounter.fromJson(json.getAsJsonArray("pal_park_encounters")),
                 new LocalizedNames(json.getAsJsonArray("names"), "name"),
-                new LocalizedNameList<>(json.getAsJsonArray("flavor_text_entries"), "flavor_text", (byte) 1),
+                new FlavorList<>(json.getAsJsonArray("flavor_text_entries"), "flavor_text", false),
                 new LocalizedNames(json.getAsJsonArray("genera"), "genus")
         );
     }

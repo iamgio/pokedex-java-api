@@ -2,9 +2,9 @@ package eu.iamgio.pokedex.lang;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import eu.iamgio.pokedex.util.Flavor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * List of localized names
@@ -19,7 +19,7 @@ public class LocalizedNameList<T extends LocalizedName> extends ArrayList<T> {
      * @param key Name of the JSON key
      * @param flavor -1 if not a flavor. 0 if flavor based on version groups. 1 if flavor based on versions
      */
-    public LocalizedNameList(JsonArray array, String key, byte flavor) {
+    protected LocalizedNameList(JsonArray array, String key, byte flavor) {
         this();
         if(this instanceof LocalizedNames) {
             for(JsonElement json : array) {
@@ -30,6 +30,14 @@ public class LocalizedNameList<T extends LocalizedName> extends ArrayList<T> {
                 add((T) new Flavor(json.getAsJsonObject(), flavor == 0));
             }
         }
+    }
+
+    /**
+     * Loads a list of {@link LocalizedName} from another list
+     * @param list List
+     */
+    public LocalizedNameList(List<T> list) {
+        super(list);
     }
 
     public LocalizedNameList() {}

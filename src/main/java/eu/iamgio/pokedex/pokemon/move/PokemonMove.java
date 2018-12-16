@@ -5,10 +5,9 @@ import com.google.gson.JsonObject;
 import eu.iamgio.pokedex.Generation;
 import eu.iamgio.pokedex.connection.HttpConnection;
 import eu.iamgio.pokedex.exception.PokedexException;
-import eu.iamgio.pokedex.lang.LocalizedNameList;
+import eu.iamgio.pokedex.lang.FlavorList;
 import eu.iamgio.pokedex.lang.LocalizedNames;
 import eu.iamgio.pokedex.pokemon.PokemonType;
-import eu.iamgio.pokedex.util.Flavor;
 import eu.iamgio.pokedex.util.NamedResource;
 import eu.iamgio.pokedex.util.StringUtil;
 import eu.iamgio.pokedex.version.VersionGroup;
@@ -115,7 +114,7 @@ public class PokemonMove {
     /**
      * The flavor text of this move listed in different languages.
      */
-    private LocalizedNameList<Flavor<VersionGroup>> flavors;
+    private FlavorList<VersionGroup> flavors;
 
     /**
      * @param name Name of the move
@@ -160,7 +159,7 @@ public class PokemonMove {
                 machines,
                 MoveStatChange.fromJson(json.getAsJsonArray("stat_changes")),
                 new LocalizedNames(json.getAsJsonArray("names"), "name"),
-                new LocalizedNameList<>(json.getAsJsonArray("flavor_text_entries"), "flavor_text", (byte) 0)
+                new FlavorList<>(json.getAsJsonArray("flavor_text_entries"), "flavor_text", true)
         );
     }
 
