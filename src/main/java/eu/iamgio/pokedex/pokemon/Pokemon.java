@@ -7,13 +7,17 @@ import eu.iamgio.pokedex.connection.HttpConnection;
 import eu.iamgio.pokedex.exception.PokedexException;
 import eu.iamgio.pokedex.pokemon.move.PokemonPersonalMove;
 import eu.iamgio.pokedex.util.NamedResource;
+import eu.iamgio.pokedex.util.Pair;
 import eu.iamgio.pokedex.util.StringUtil;
 import eu.iamgio.pokedex.version.Version;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Represents a Pokémon from the Pokédex
@@ -54,9 +58,9 @@ public class Pokemon {
     private int baseExperience;
 
     /**
-     * A list of types this Pokémon has
+     * A pair of types this Pokémon has. Second may be null if it has only one type
      */
-    private PokemonType[] types;
+    private Pair<PokemonType, PokemonType> types;
 
     /**
      * A list of game indices relevent to Pokémon item by generation
@@ -171,7 +175,7 @@ public class Pokemon {
                 json.get("height").getAsInt(),
                 json.get("weight").getAsInt(),
                 json.get("base_experience").getAsInt(),
-                types.toArray(new PokemonType[types.size()]),
+                new Pair<>(types.get(0), types.size() > 1 ? types.get(1) : null),
                 indices,
                 moves,
                 new NamedResource(json.get("species").getAsJsonObject()).getName(),

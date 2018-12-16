@@ -9,6 +9,7 @@ import eu.iamgio.pokedex.pokemon.encounter.EncounterConditionValue;
 import eu.iamgio.pokedex.pokemon.encounter.EncounterMethod;
 import eu.iamgio.pokedex.pokemon.encounter.PalParkEncounter;
 import eu.iamgio.pokedex.pokemon.move.*;
+import eu.iamgio.pokedex.util.Pair;
 import eu.iamgio.pokedex.version.Version;
 import eu.iamgio.pokedex.version.VersionGroup;
 import org.junit.jupiter.api.Test;
@@ -28,8 +29,9 @@ class Tests {
         assertEquals(7, bulbasaur.getHeight());
         assertEquals(69, bulbasaur.getWeight());
         assertEquals(64, bulbasaur.getBaseExperience());
-        assertArrayEquals(new PokemonType[] {PokemonType.GRASS, PokemonType.POISON}, bulbasaur.getTypes());
+        assertEquals(new Pair<>(PokemonType.GRASS, PokemonType.POISON), bulbasaur.getTypes());
         assertEquals(153, bulbasaur.getGameIndices().get(Version.YELLOW).intValue());
+        assertEquals("bulbasaur", bulbasaur.getSpeciesName());
         assertEquals("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
                 bulbasaur.getSprite(Sprite.Type.FRONT_DEFAULT).getUrl());
         PokemonPersonalMove.VersionGroupDetail leechSeed = bulbasaur.getMove("leech-seed").getGroupDetails().get(0);

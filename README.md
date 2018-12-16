@@ -19,10 +19,9 @@ To get started, let's try to get the types of [Bulbasaur](https://www.pokemon.co
 public class Main {
     public static void main(String[] args) {
         Pokemon bulbasaur = Pokemon.fromName("bulbasaur");
-        PokemonType[] types = bulbasaur.getTypes();
-        for(PokemonType type : types) {
-            System.out.println(type);
-        }
+        Pair<PokemonType, PokemonType> types = bulbasaur.getTypes();
+        System.out.println(types.getFirst());
+        System.out.println(types.getSecond());
     }
 }
 ```
