@@ -69,6 +69,11 @@ public class Pokemon {
     private List<PokemonPersonalMove> moves;
 
     /**
+     * The species this Pokémon belongs to
+     */
+    private String speciesName;
+
+    /**
      * A list of base stat values for this Pokémon
      */
     private Stat[] stats;
@@ -169,6 +174,7 @@ public class Pokemon {
                 types.toArray(new PokemonType[types.size()]),
                 indices,
                 moves,
+                new NamedResource(json.get("species").getAsJsonObject()).getName(),
                 stats,
                 sprites
         );
