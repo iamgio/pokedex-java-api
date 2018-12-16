@@ -3,6 +3,8 @@ package eu.iamgio.pokedex.util;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Objects;
+
 /**
  * Represents a pair of two objects
  * @param <F> First object
@@ -25,7 +27,7 @@ public class Pair<F, S> {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Objects.hash(first, second);
     }
 
     @Override
