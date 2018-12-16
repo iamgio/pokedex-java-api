@@ -92,7 +92,7 @@ public class PokemonSpecies {
     private Generation generation;
 
     /**
-     * Name of the Pokémon species that evolves into this Pokemon species
+     * Name of the Pokémon species that evolves into this Pokemon species. Null if it's the first of the species
      */
     private String evolvesFromSpeciesName;
 
@@ -141,8 +141,6 @@ public class PokemonSpecies {
      */
     private LocalizedNames genera;
 
-    //TODO others
-
     /**
      * Whether or not this Pokémon has visual gender differences
      */
@@ -177,6 +175,7 @@ public class PokemonSpecies {
                     variety.getAsJsonObject().get("is_default").getAsBoolean()
             ));
         }
+        JsonElement evolvesFromSpecies = json.get("evolves_from_species");
         return new PokemonSpecies(
                 json.get("id").getAsInt(),
                 json.get("order").getAsInt(),
@@ -190,7 +189,7 @@ public class PokemonSpecies {
                 GrowthRate.valueOf(StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("growth_rate")).getName())),
                 pokedexNumbers,
                 Generation.fromJson(json),
-                new NamedResource(json.getAsJsonObject("evolves_from_species")).getName(),
+                evolvesFromSpecies.isJsonNull() ? null : new NamedResource(evolvesFromSpecies.getAsJsonObject()).getName(),
                 PokemonHabitat.valueOf(StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("habitat")).getName())),
                 NamedResource.getNames(json.getAsJsonArray("egg_groups"))
                     .stream()
