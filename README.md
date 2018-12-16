@@ -36,7 +36,7 @@ Every component of the API (such as Pokémons, abilities, etc) can be instantiat
 
 # Localized strings
 
-An interesting part of this libraries is the one which collects strings from various languages, contained inside the [lang](https://github.com/iAmGio/pokedex-java-api/tree/master/src/main/java/eu/iamgio/pokedex/lang) package.   
+An interesting part of this library is the one which collects strings from various languages, contained inside the [lang](https://github.com/iAmGio/pokedex-java-api/tree/master/src/main/java/eu/iamgio/pokedex/lang) package.   
 Every localized string is composed by two fields: `name` (String) and `language` (enum Language), and groups of them are stored inside specific lists, such as `LocalizedNames` or `FlavorList` (both extend `LocalizedNameList`). They have a `get(Language)` method which returns the string in the selected language.   
 
 The particular one is `FlavorList`: a flavor is a localized string assigned within a version (or a version group) of the official game: having a flavor list, you will be able to do something like this:
