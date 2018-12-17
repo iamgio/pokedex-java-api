@@ -2,6 +2,7 @@ package eu.iamgio.pokedex;
 
 import eu.iamgio.pokedex.lang.Language;
 import eu.iamgio.pokedex.location.PalParkArea;
+import eu.iamgio.pokedex.machines.Machine;
 import eu.iamgio.pokedex.pokedex.Pokedex;
 import eu.iamgio.pokedex.pokemon.*;
 import eu.iamgio.pokedex.pokemon.encounter.Encounter;
@@ -143,5 +144,14 @@ class Tests {
         assertEquals(PalParkArea.FOREST, encounter.getArea());
         assertEquals(80, encounter.getBaseScore());
         assertEquals(10, encounter.getRate());
+    }
+
+    @Test
+    void testMegaPunchMachine() {
+        Machine machine = Machine.fromName("mega-punch");
+        assertEquals(1, machine.getId());
+        assertEquals("tm01", machine.getItem());
+        assertEquals("mega-punch", machine.getMoveName());
+        assertEquals(VersionGroup.RED_BLUE, machine.getVersionGroup());
     }
 }
