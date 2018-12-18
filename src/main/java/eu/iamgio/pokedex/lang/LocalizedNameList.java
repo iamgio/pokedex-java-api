@@ -27,7 +27,7 @@ public class LocalizedNameList<T extends LocalizedName> extends ArrayList<T> {
             }
         } else if(flavor >= 0) {
             for(JsonElement json : array) {
-                add((T) new Flavor(json.getAsJsonObject(), flavor == 0));
+                add((T) new Flavor(json.getAsJsonObject(), key, flavor == 0));
             }
         }
     }

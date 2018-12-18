@@ -22,10 +22,11 @@ public class Flavor<T extends IVersion> extends LocalizedName {
     /**
      * Loads a {@link LocalizedName} from a JSON
      * @param json JSON containing a localized name
+     * @param key Name of the JSON key
      */
     @SuppressWarnings("unchecked")
-    public Flavor(JsonObject json, boolean isVersionGroup) {
-        super(json, "flavor_text");
+    public Flavor(JsonObject json, String key, boolean isVersionGroup) {
+        super(json, key);
         if(isVersionGroup) {
             this.version = (T) VersionGroup.valueOf(
                     StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("version_group")).getName()));
