@@ -15,6 +15,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * An item is an object in the games which the player can pick up, keep in their bag, and use in some manner. They have various uses, including healing, powering up, helping catch Pokémon, or to access a new area
@@ -40,13 +42,19 @@ public class Item {
     private int cost;
 
     /**
-     * The power of the move Fling when used with this item
+     * A list of attributes this item has
+     */
+    private List<ItemAttribute> attributes;
+
+    /**
+     * The power of the move Fling when used with this item. Null if no fling
      */
     private Integer flingPower;
 
-    //TODO flingEffect
-
-    //TODO attributes
+    /**
+     * The effect of the move Fling when used with this item. Null if no fling
+     */
+    private ItemFlingEffect flingEffect;
 
     //TODO categories
 
@@ -103,11 +111,19 @@ public class Item {
             );
         }
         JsonElement flingPower = json.get("fling_power");
+        JsonElement flingEffect = json.get("fling_effect");
         return new Item(
                 json.get("id").getAsInt(),
                 json.get("name").getAsString(),
                 json.get("cost").getAsInt(),
+                NamedResource.getNames(json.getAsJsonArray("attributes"))
+                    .stream()
+                    .map(StringUtil::toEnumName)
+                    .map(ItemAttribute::valueOf)
+                    .collect(Collectors.toList()),
                 flingPower.isJsonNull() ? null : flingPower.getAsInt(),
+                flingEffect.isJsonNull() ? null :
+                        ItemFlingEffect.valueOf(StringUtil.toEnumName(new NamedResource(flingEffect.getAsJsonObject()).getName())),
                 gameIndices,
                 machines,
                 new LocalizedNames(json.getAsJsonArray("names"), "name"),

@@ -1,6 +1,7 @@
 package eu.iamgio.pokedex;
 
 import eu.iamgio.pokedex.item.Item;
+import eu.iamgio.pokedex.item.ItemAttribute;
 import eu.iamgio.pokedex.lang.Language;
 import eu.iamgio.pokedex.location.PalParkArea;
 import eu.iamgio.pokedex.machines.Machine;
@@ -157,16 +158,19 @@ class Tests {
     }
 
     @Test
-    void testMegaPunchMachineItem() {
-        Item item = Item.fromName("tm01");
-        assertEquals(305, item.getId());
-        assertEquals("tm01", item.getName());
-        assertEquals(10000, item.getCost());
+    void testMasterBall() {
+        Item item = Item.fromName("master-ball");
+        assertEquals(1, item.getId());
+        assertEquals("master-ball", item.getName());
+        assertEquals(0, item.getCost());
+        assertEquals(true, item.getAttributes().contains(ItemAttribute.HOLDABLE));
+        assertEquals(4, item.getAttributes().size());
         assertEquals(null, item.getFlingPower());
-        assertEquals(328, item.getGameIndices().get(Generation.SUN_MOON).intValue());
-        assertEquals(17, item.getMachines().get(VersionGroup.SUN_MOON).intValue());
-        assertEquals("TM01", item.getLocalizedNames().get(Language.ENGLISH).getName());
-        assertEquals("Powerful, but makes\nthe user flinch if\nhit by the foe.",
+        assertEquals(null, item.getFlingEffect());
+        assertEquals(1, item.getGameIndices().get(Generation.SUN_MOON).intValue());
+        assertEquals(0, item.getMachines().size());
+        assertEquals("Master Ball", item.getLocalizedNames().get(Language.ENGLISH).getName());
+        assertEquals("The best BALL that\ncatches a POKéMON\nwithout fail.",
                 item.getFlavors().filterVersion(VersionGroup.RUBY_SAPPHIRE).get(Language.ENGLISH).getName());
     }
 }
