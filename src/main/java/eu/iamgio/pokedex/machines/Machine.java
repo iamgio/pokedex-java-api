@@ -40,31 +40,22 @@ public class Machine {
     private VersionGroup versionGroup;
 
     /**
-     * @param name Name of the machine
-     * @return Machine whose name matches <tt>name</tt>
-     * @throws PokedexException if <tt>name</tt> doesn't match a machine name
-     */
-    public static Machine fromName(String name) throws PokedexException {
-        JsonObject json;
-        try {
-            json = new HttpConnection("machine/" + name + "/").getJson();
-        } catch(RuntimeException e) {
-            throw new PokedexException("Could not find machine with name/ID " + name);
-        }
-        return new Machine(
-                json.get("id").getAsInt(),
-                new NamedResource(json.getAsJsonObject("item")).getName(),
-                new NamedResource(json.getAsJsonObject("move")).getName(),
-                VersionGroup.valueOf(StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("version-group")).getName()))
-        );
-    }
-
-    /**
      * @param id Identifier of the machine
      * @return Machine whose ID matches <tt>id</tt>
      * @throws PokedexException if <tt>id</tt> is 0 or less or doesn't match a machine ID
      */
     public static Machine fromId(Number id) throws PokedexException {
-        return fromName(String.valueOf(id));
+        JsonObject json;
+        try {
+            json = new HttpConnection("machine/" + id + "/").getJson();
+        } catch(RuntimeException e) {
+            throw new PokedexException("Could not find machine with ID " + id);
+        }
+        return new Machine(
+                json.get("id").getAsInt(),
+                new NamedResource(json.getAsJsonObject("item")).getName(),
+                new NamedResource(json.getAsJsonObject("move")).getName(),
+                VersionGroup.valueOf(StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("version_group")).getName()))
+        );
     }
 }

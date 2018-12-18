@@ -149,7 +149,7 @@ class Tests {
 
     @Test
     void testMegaPunchMachine() {
-        Machine machine = Machine.fromName("mega-punch");
+        Machine machine = Machine.fromId(1);
         assertEquals(1, machine.getId());
         assertEquals("tm01", machine.getItem());
         assertEquals("mega-punch", machine.getMoveName());
