@@ -2,6 +2,7 @@ package eu.iamgio.pokedex;
 
 import eu.iamgio.pokedex.item.Item;
 import eu.iamgio.pokedex.item.ItemAttribute;
+import eu.iamgio.pokedex.item.ItemCategory;
 import eu.iamgio.pokedex.lang.Language;
 import eu.iamgio.pokedex.location.PalParkArea;
 import eu.iamgio.pokedex.machines.Machine;
@@ -167,6 +168,7 @@ class Tests {
         assertEquals(4, item.getAttributes().size());
         assertEquals(null, item.getFlingPower());
         assertEquals(null, item.getFlingEffect());
+        assertEquals(ItemCategory.STANDARD_BALLS, item.getCategory());
         assertEquals(1, item.getGameIndices().get(Generation.SUN_MOON).intValue());
         assertEquals(0, item.getMachines().size());
         assertEquals("Master Ball", item.getLocalizedNames().get(Language.ENGLISH).getName());

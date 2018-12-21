@@ -56,7 +56,10 @@ public class Item {
      */
     private ItemFlingEffect flingEffect;
 
-    //TODO categories
+    /**
+     * The category of items this item falls into
+     */
+    private ItemCategory category;
 
     //TODO sprites
 
@@ -124,6 +127,7 @@ public class Item {
                 flingPower.isJsonNull() ? null : flingPower.getAsInt(),
                 flingEffect.isJsonNull() ? null :
                         ItemFlingEffect.valueOf(StringUtil.toEnumName(new NamedResource(flingEffect.getAsJsonObject()).getName())),
+                ItemCategory.valueOf(StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("category")).getName())),
                 gameIndices,
                 machines,
                 new LocalizedNames(json.getAsJsonArray("names"), "name"),
