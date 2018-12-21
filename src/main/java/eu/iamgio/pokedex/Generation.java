@@ -41,7 +41,7 @@ public enum Generation implements Loadable<Generation.LoadedGeneration> {
      * @return {@link Generation} contained in JSON
      */
     public static Generation fromJson(JsonObject json) {
-        return valueOf(StringUtil.toEnumName(new NamedResource(json.get("generation").getAsJsonObject()).getName()));
+        return valueOf(new NamedResource(json.get("generation")).toEnumName());
     }
 
     @Override

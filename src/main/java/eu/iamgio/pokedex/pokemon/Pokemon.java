@@ -8,7 +8,6 @@ import eu.iamgio.pokedex.exception.PokedexException;
 import eu.iamgio.pokedex.pokemon.move.PokemonPersonalMove;
 import eu.iamgio.pokedex.util.NamedResource;
 import eu.iamgio.pokedex.util.Pair;
-import eu.iamgio.pokedex.util.StringUtil;
 import eu.iamgio.pokedex.version.Version;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -142,7 +141,7 @@ public class Pokemon {
         HashMap<Version, Integer> indices = new HashMap<>();
         for(JsonElement indice : json.getAsJsonArray("game_indices")) {
             indices.put(
-                    Version.valueOf(StringUtil.toEnumName(new NamedResource(indice.getAsJsonObject().getAsJsonObject("version")).getName())),
+                    Version.valueOf(new NamedResource(indice.getAsJsonObject().get("version")).toEnumName()),
                     indice.getAsJsonObject().get("game_index").getAsInt()
             );
         }
@@ -156,7 +155,7 @@ public class Pokemon {
         for(int i = 0; i < statsArray.size(); i++) {
             JsonObject stat = statsArray.get(i).getAsJsonObject();
             stats[i] = new Stat(
-                    Stat.Type.valueOf(StringUtil.toEnumName(new NamedResource(stat.getAsJsonObject("stat")).getName())),
+                    Stat.Type.valueOf(new NamedResource(stat.get("stat")).toEnumName()),
                     stat.get("effort").getAsInt(),
                     stat.get("base_stat").getAsInt()
             );

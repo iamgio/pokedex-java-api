@@ -163,7 +163,7 @@ public class PokemonSpecies {
         for(JsonElement pokedex : json.getAsJsonArray("pokedex_numbers")) {
             JsonObject pokedexObj = pokedex.getAsJsonObject();
             pokedexNumbers.put(
-                    Pokedex.Type.valueOf(StringUtil.toEnumName(new NamedResource(pokedexObj.getAsJsonObject("pokedex")).getName())),
+                    Pokedex.Type.valueOf(new NamedResource(pokedexObj.get("pokedex")).toEnumName()),
                     pokedexObj.get("entry_number").getAsInt()
             );
         }
@@ -185,18 +185,18 @@ public class PokemonSpecies {
                 json.get("hatch_counter").getAsInt(),
                 json.get("has_gender_differences").getAsBoolean(),
                 json.get("forms_switchable").getAsBoolean(),
-                GrowthRate.valueOf(StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("growth_rate")).getName())),
+                GrowthRate.valueOf(new NamedResource(json.get("growth_rate")).toEnumName()),
                 pokedexNumbers,
                 Generation.fromJson(json),
                 evolvesFromSpecies.isJsonNull() ? null : new NamedResource(evolvesFromSpecies.getAsJsonObject()).getName(),
-                PokemonHabitat.valueOf(StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("habitat")).getName())),
+                PokemonHabitat.valueOf(new NamedResource(json.get("habitat")).toEnumName()),
                 NamedResource.getNames(json.getAsJsonArray("egg_groups"))
                     .stream()
                     .map(StringUtil::toEnumName)
                     .map(EggGroup::valueOf)
                     .collect(Collectors.toList()),
-                PokemonColor.valueOf(new NamedResource(json.getAsJsonObject("color")).getName().toUpperCase()),
-                PokemonShape.valueOf(StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("shape")).getName())),
+                PokemonColor.valueOf(new NamedResource(json.get("color")).toEnumName()),
+                PokemonShape.valueOf(new NamedResource(json.get("shape")).toEnumName()),
                 varieties,
                 PalParkEncounter.fromJson(json.getAsJsonArray("pal_park_encounters")),
                 new LocalizedNames(json.getAsJsonArray("names"), "name"),

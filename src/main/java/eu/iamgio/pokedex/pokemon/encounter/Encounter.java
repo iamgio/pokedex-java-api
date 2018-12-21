@@ -57,7 +57,7 @@ public class Encounter {
                 }
                 versionDetails.add(
                         new VersionDetail(
-                                Version.valueOf(StringUtil.toEnumName(new NamedResource(detailObject.getAsJsonObject("version")).getName())),
+                                Version.valueOf(new NamedResource(detailObject.get("version")).toEnumName()),
                                 detailObject.get("max_chance").getAsInt(),
                                 encounterDetails
                         )
@@ -158,7 +158,7 @@ public class Encounter {
                             .collect(Collectors.toList()),
                     json.get("max_level").getAsInt(),
                     json.get("min_level").getAsInt(),
-                    EncounterMethod.valueOf(StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("method")).getName()))
+                    EncounterMethod.valueOf(new NamedResource(json.get("method")).toEnumName())
             );
         }
     }

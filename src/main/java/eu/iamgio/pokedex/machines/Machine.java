@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import eu.iamgio.pokedex.connection.HttpConnection;
 import eu.iamgio.pokedex.exception.PokedexException;
 import eu.iamgio.pokedex.util.NamedResource;
-import eu.iamgio.pokedex.util.StringUtil;
 import eu.iamgio.pokedex.version.VersionGroup;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -55,7 +54,7 @@ public class Machine {
                 json.get("id").getAsInt(),
                 new NamedResource(json.getAsJsonObject("item")).getName(),
                 new NamedResource(json.getAsJsonObject("move")).getName(),
-                VersionGroup.valueOf(StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("version_group")).getName()))
+                VersionGroup.valueOf(new NamedResource(json.getAsJsonObject("version_group")).toEnumName())
         );
     }
 }

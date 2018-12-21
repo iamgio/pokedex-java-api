@@ -20,6 +20,14 @@ public class NamedResource {
         this.name = json.get("name").getAsString();
     }
 
+    public NamedResource(JsonElement json) {
+        this(json.getAsJsonObject());
+    }
+
+    public String toEnumName() {
+        return StringUtil.toEnumName(name);
+    }
+
     /**
      * @param array JSON array
      * @return List of {@link NamedResource}s

@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import eu.iamgio.pokedex.pokemon.Stat;
 import eu.iamgio.pokedex.util.NamedResource;
-import eu.iamgio.pokedex.util.StringUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,8 +40,8 @@ public class MoveStatChange {
             JsonObject obj = change.getAsJsonObject();
             changes.add(new MoveStatChange(
                     obj.get("change").getAsInt(),
-                    Stat.Type.valueOf(StringUtil.toEnumName(new NamedResource(obj.getAsJsonObject("stat")).getName()))
-            ));
+                    Stat.Type.valueOf(new NamedResource(obj.get("stat")).toEnumName()))
+            );
         }
         return changes;
     }

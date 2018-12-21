@@ -109,7 +109,7 @@ public class Item {
             JsonObject object = machine.getAsJsonObject();
             String url = object.getAsJsonObject("machine").get("url").getAsString();
             machines.put(
-                    VersionGroup.valueOf(StringUtil.toEnumName(new NamedResource(object.getAsJsonObject("version_group")).getName())),
+                    VersionGroup.valueOf(new NamedResource(object.get("version_group")).toEnumName()),
                     Integer.parseInt(url.substring("https://pokeapi.co/api/v2/machine/".length(), url.length() - 1))
             );
         }
@@ -126,8 +126,8 @@ public class Item {
                     .collect(Collectors.toList()),
                 flingPower.isJsonNull() ? null : flingPower.getAsInt(),
                 flingEffect.isJsonNull() ? null :
-                        ItemFlingEffect.valueOf(StringUtil.toEnumName(new NamedResource(flingEffect.getAsJsonObject()).getName())),
-                ItemCategory.valueOf(StringUtil.toEnumName(new NamedResource(json.getAsJsonObject("category")).getName())),
+                        ItemFlingEffect.valueOf(new NamedResource(flingEffect).toEnumName()),
+                ItemCategory.valueOf(new NamedResource(json.get("category")).toEnumName()),
                 gameIndices,
                 machines,
                 new LocalizedNames(json.getAsJsonArray("names"), "name"),
