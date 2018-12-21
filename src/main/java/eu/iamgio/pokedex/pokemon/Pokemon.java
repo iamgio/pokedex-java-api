@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import eu.iamgio.pokedex.connection.HttpConnection;
 import eu.iamgio.pokedex.exception.PokedexException;
 import eu.iamgio.pokedex.pokemon.move.PokemonPersonalMove;
+import eu.iamgio.pokedex.util.JsonStream;
 import eu.iamgio.pokedex.util.NamedResource;
 import eu.iamgio.pokedex.util.Pair;
 import eu.iamgio.pokedex.version.Version;
@@ -13,10 +14,10 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Represents a Pokémon from the Pokédex
@@ -64,7 +65,7 @@ public class Pokemon {
     /**
      * A list of game indices relevent to Pokémon item by generation
      */
-    private HashMap<Version, Integer> gameIndices;
+    private Map<Version, Integer> gameIndices;
 
     /**
      * A list of types this Pokémon can learn
@@ -132,24 +133,12 @@ public class Pokemon {
         } catch(RuntimeException e) {
             throw new PokedexException("Could not find Pokémon with name/ID " + name);
         }
-        List<PokemonType> types = new ArrayList<>();
-        for(JsonElement type : json.getAsJsonArray("types")) {
-            types.add(PokemonType.valueOf(type.getAsJsonObject()
-                    .get("type").getAsJsonObject()
-                    .get("name").getAsString().toUpperCase()));
-        }
-        HashMap<Version, Integer> indices = new HashMap<>();
-        for(JsonElement indice : json.getAsJsonArray("game_indices")) {
-            indices.put(
-                    Version.valueOf(new NamedResource(indice.getAsJsonObject().get("version")).toEnumName()),
-                    indice.getAsJsonObject().get("game_index").getAsInt()
-            );
-        }
-        List<PokemonPersonalMove> moves = new ArrayList<>();
-        for(JsonElement move : json.getAsJsonArray("moves")) {
-            moves.add(PokemonPersonalMove.fromJson(move.getAsJsonObject()));
-        }
-        Collections.reverse(types);
+        List<PokemonType> types = new JsonStream(json.getAsJsonArray("types"))
+                .stream()
+                .map(type -> new NamedResource(type.getAsJsonObject().get("type")).toEnumName())
+                .map(PokemonType::valueOf)
+                .sorted(Collections.reverseOrder())
+                .collect(Collectors.toList());
         JsonArray statsArray = json.getAsJsonArray("stats");
         Stat[] stats = new Stat[statsArray.size()];
         for(int i = 0; i < statsArray.size(); i++) {
@@ -175,9 +164,19 @@ public class Pokemon {
                 json.get("weight").getAsInt(),
                 json.get("base_experience").getAsInt(),
                 new Pair<>(types.get(0), types.size() > 1 ? types.get(1) : null),
-                indices,
-                moves,
-                new NamedResource(json.get("species").getAsJsonObject()).getName(),
+                new JsonStream(json.getAsJsonArray("game_indices"))
+                        .stream()
+                        .map(JsonElement::getAsJsonObject)
+                        .collect(Collectors.toMap(
+                                indice -> Version.valueOf(new NamedResource(indice.get("version")).toEnumName()),
+                                indice -> indice.get("game_index").getAsInt()
+                        )),
+                new JsonStream(json.getAsJsonArray("moves"))
+                    .stream()
+                    .map(JsonElement::getAsJsonObject)
+                    .map(PokemonPersonalMove::fromJson)
+                    .collect(Collectors.toList()),
+                new NamedResource(json.get("species")).getName(),
                 stats,
                 sprites
         );
