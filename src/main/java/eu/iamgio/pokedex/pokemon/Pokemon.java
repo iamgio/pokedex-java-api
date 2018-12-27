@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import eu.iamgio.pokedex.connection.HttpConnection;
 import eu.iamgio.pokedex.exception.PokedexException;
+import eu.iamgio.pokedex.item.ItemHold;
 import eu.iamgio.pokedex.pokemon.move.PokemonPersonalMove;
 import eu.iamgio.pokedex.util.JsonStream;
 import eu.iamgio.pokedex.util.NamedResource;
@@ -61,6 +62,11 @@ public class Pokemon {
      * A pair of types this Pokémon has. Second may be null if it has only one type
      */
     private Pair<PokemonType, PokemonType> types;
+
+    /**
+     * A list of items this Pokémon may be holding when encountered
+     */
+    private List<ItemHold> heldItems;
 
     /**
      * A list of game indices relevent to Pokémon item by generation
@@ -164,6 +170,7 @@ public class Pokemon {
                 json.get("weight").getAsInt(),
                 json.get("base_experience").getAsInt(),
                 new Pair<>(types.get(0), types.size() > 1 ? types.get(1) : null),
+                ItemHold.fromJson(json.getAsJsonArray("held_items"), true),
                 new JsonStream(json.getAsJsonArray("game_indices"))
                         .stream()
                         .map(JsonElement::getAsJsonObject)

@@ -61,9 +61,15 @@ public class Item {
      */
     private ItemCategory category;
 
-    //TODO sprites
+    /**
+     * The sprite used to depict this item in the game
+     */
+    private String sprite;
 
-    //TODO heldByPokemon
+    /**
+     * A list of Pokémon that might be found in the wild holding this item
+     */
+    private List<ItemHold> heldByPokemon;
 
     //TODO babyTriggerFor
 
@@ -128,6 +134,8 @@ public class Item {
                 flingEffect.isJsonNull() ? null :
                         ItemFlingEffect.valueOf(new NamedResource(flingEffect).toEnumName()),
                 ItemCategory.valueOf(new NamedResource(json.get("category")).toEnumName()),
+                json.getAsJsonObject("sprites").get("default").getAsString(),
+                ItemHold.fromJson(json.getAsJsonArray("held_by_pokemon"), false),
                 gameIndices,
                 machines,
                 new LocalizedNames(json.getAsJsonArray("names"), "name"),

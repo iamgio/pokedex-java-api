@@ -1,8 +1,6 @@
 package eu.iamgio.pokedex;
 
-import eu.iamgio.pokedex.item.Item;
-import eu.iamgio.pokedex.item.ItemAttribute;
-import eu.iamgio.pokedex.item.ItemCategory;
+import eu.iamgio.pokedex.item.*;
 import eu.iamgio.pokedex.lang.Language;
 import eu.iamgio.pokedex.location.PalParkArea;
 import eu.iamgio.pokedex.machines.Machine;
@@ -34,6 +32,7 @@ class Tests {
         assertEquals(69, bulbasaur.getWeight());
         assertEquals(64, bulbasaur.getBaseExperience());
         assertEquals(new Pair<>(PokemonType.GRASS, PokemonType.POISON), bulbasaur.getTypes());
+        assertEquals(0, bulbasaur.getHeldItems().size());
         assertEquals(153, bulbasaur.getGameIndices().get(Version.YELLOW).intValue());
         assertEquals("bulbasaur", bulbasaur.getSpeciesName());
         assertEquals("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
@@ -44,6 +43,14 @@ class Tests {
         assertEquals(7, leechSeed.getLevelLearnedAt());
         assertEquals(6, bulbasaur.getStats().length);
         assertEquals(45, bulbasaur.getStat(Stat.Type.SPEED).getBaseStat());
+    }
+
+    @Test
+    void testChanseyHeldItems() {
+        Pokemon chansey = Pokemon.fromName("chansey");
+        ItemHold holder = chansey.getHeldItems().get(0);
+        assertEquals("oval-stone", holder.getName());
+        assertEquals(50, holder.getVersionDetails().get(Version.PEARL).intValue());
     }
 
     @Test
@@ -169,10 +176,21 @@ class Tests {
         assertEquals(null, item.getFlingPower());
         assertEquals(null, item.getFlingEffect());
         assertEquals(ItemCategory.STANDARD_BALLS, item.getCategory());
+        assertEquals("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png",
+                item.getSprite());
         assertEquals(1, item.getGameIndices().get(Generation.SUN_MOON).intValue());
         assertEquals(0, item.getMachines().size());
         assertEquals("Master Ball", item.getLocalizedNames().get(Language.ENGLISH).getName());
         assertEquals("The best BALL that\ncatches a POKéMON\nwithout fail.",
                 item.getFlavors().filterVersion(VersionGroup.RUBY_SAPPHIRE).get(Language.ENGLISH).getName());
+        assertEquals(0, item.getHeldByPokemon().size());
+    }
+
+    @Test
+    void testOvalStoneHolders() {
+        Item item = Item.fromName("oval-stone");
+        ItemHold holder = item.getHeldByPokemon().get(0);
+        assertEquals("chansey", holder.getName());
+        assertEquals(50, holder.getVersionDetails().get(Version.PEARL).intValue());
     }
 }
