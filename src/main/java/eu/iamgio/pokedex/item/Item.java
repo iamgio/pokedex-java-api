@@ -71,8 +71,6 @@ public class Item {
      */
     private List<ItemHold> heldByPokemon;
 
-    //TODO babyTriggerFor
-
     /**
      * A list of game indices relevent to this item by generation
      */

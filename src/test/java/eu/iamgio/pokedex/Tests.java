@@ -160,7 +160,7 @@ class Tests {
     void testMegaPunchMachine() {
         Machine machine = Machine.fromId(1);
         assertEquals(1, machine.getId());
-        assertEquals("tm01", machine.getItem());
+        assertEquals("tm01", machine.getItemName());
         assertEquals("mega-punch", machine.getMoveName());
         assertEquals(VersionGroup.RED_BLUE, machine.getVersionGroup());
     }

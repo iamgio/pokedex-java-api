@@ -23,10 +23,9 @@ public class Machine {
     private int id;
 
     /**
-     * TODO make Item
-     * The TM or HM item that corresponds to this machine
+     * The TM or HM itemName that corresponds to this machine
      */
-    private String item;
+    private String itemName;
 
     /**
      * The move that is taught by this machine
