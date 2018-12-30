@@ -5,11 +5,49 @@
 [![Codacy](https://api.codacy.com/project/badge/Grade/087ddd3689bf4ad08d383f52a9936708)](https://www.codacy.com/app/iAmGio/pokedex-java-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=iAmGio/pokedex-java-api&amp;utm_campaign=Badge_Grade) [![CodeFactor](https://www.codefactor.io/repository/github/iamgio/pokedex-java-api/badge)](https://www.codefactor.io/repository/github/iamgio/pokedex-java-api)
 
 # Pokédex Java API
-_pokedex-java-api_ is the first wrapper for [pokeapi.co](https://pokeapi.co) written in pure Java.   
+_pokedex-java-api_ is the first wrapper for [pokeapi.co](https://pokeapi.co) written in pure Java.
+   
 # Why should I use PDJ API?
 - [x] Fully documented  
 - [x] Everything is treated as an object  
 - [x] Mantainable and readable code  
+
+# Maven
+
+```xml
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.iAmGio</groupId>
+            <artifactId>pokedex-java-api</artifactId>
+            <version>VERSION</version>
+        </dependency>
+    </dependencies>
+```
+
+# Gradle
+
+```groovy
+  repositories {
+	maven {
+	  url 'https://jitpack.io' 
+	}
+  }
+  
+  dependencies {
+    implementation 'com.github.iAmGio:pokedex-java-api:VERSION'
+  }
+```
+
+# Manual / JAR
+
+JAR files can be found in the [releases](https://github.com/iAmGio/pokedex-java-api/releases) tab.
 
 # Getting started
 
@@ -45,4 +83,4 @@ FlavorList<Version> flavors = ...;
 String englishStringFromPearl = flavors.filterVersion(Version.PEARL).get(Language.ENGLISH);
 ```
 
-_This project is currently work in progress. Once finished, the JAR file will be released. At the moment you're free to clone this repository and use it as you wish. Credits to this project and to pokeapi.co are appreciated._
+_Credits to this project and to pokeapi.co are appreciated._
