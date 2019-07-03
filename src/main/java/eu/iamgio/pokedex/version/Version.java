@@ -38,7 +38,9 @@ public enum Version implements IVersion {
     OMEGA_RUBY(25, VersionGroup.OMEGA_RUBY_ALPHA_SAPPHIRE),
     ALPHA_SAPPHIRE(26, VersionGroup.OMEGA_RUBY_ALPHA_SAPPHIRE),
     SUN(27, VersionGroup.SUN_MOON),
-    MOON(28, VersionGroup.SUN_MOON);
+    MOON(28, VersionGroup.SUN_MOON),
+    ULTRA_SUN(29, VersionGroup.ULTRA_SUN_ULTRA_MOON),
+    ULTRA_MOON(30, VersionGroup.ULTRA_SUN_ULTRA_MOON);
 
     /**
      * The identifier for this version
