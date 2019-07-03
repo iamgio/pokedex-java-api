@@ -38,7 +38,8 @@ public enum VersionGroup implements Loadable<VersionGroup.LoadedVersionGroup>, I
     BLACK_2_WHITE_2(14),
     X_Y(15),
     OMEGA_RUBY_ALPHA_SAPPHIRE(16),
-    SUN_MOON(17);
+    SUN_MOON(17),
+    ULTRA_SUN_ULTRA_MOON(18);
 
     /**
      * Identifier of this group
