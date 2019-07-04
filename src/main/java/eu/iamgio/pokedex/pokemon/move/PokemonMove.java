@@ -39,7 +39,7 @@ public class PokemonMove {
     /**
      * The percent value of how likely this move is to be successful
      */
-    private int accuracy;
+    private Integer accuracy;
 
     /**
      * The percent value of how likely it is this moves effect will happen. <tt>null</tt> if no effect
@@ -59,7 +59,7 @@ public class PokemonMove {
     /**
      * The base power of this move
      */
-    private int power;
+    private Integer power;
 
     /**
      * The elemental type of this move
@@ -141,14 +141,16 @@ public class PokemonMove {
             );
         }
         JsonObject meta = json.getAsJsonObject("meta");
+        JsonElement accuracy = json.get("accuracy");
+        JsonElement power = json.get("power");
         return new PokemonMove(
                 json.get("id").getAsInt(),
                 json.get("name").getAsString(),
-                json.get("accuracy").getAsInt(),
+                accuracy.isJsonNull() ? null : accuracy.getAsInt(),
                 effectChance.isJsonNull() ? null : effectChance.getAsInt(),
                 json.get("pp").getAsInt(),
                 json.get("priority").getAsByte(),
-                json.get("power").getAsInt(),
+                power.isJsonNull() ? null : power.getAsInt(),
                 PokemonType.valueOf(new NamedResource(json.get("type")).toEnumName()),
                 MoveAilment.valueOf(new NamedResource(meta.get("ailment")).toEnumName()),
                 MoveDamageClass.valueOf(new NamedResource(json.get("damage_class")).toEnumName()),
