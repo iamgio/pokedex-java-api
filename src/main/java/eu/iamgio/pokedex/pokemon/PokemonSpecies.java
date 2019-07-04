@@ -189,7 +189,7 @@ public class PokemonSpecies {
                 pokedexNumbers,
                 Generation.fromJson(json),
                 evolvesFromSpecies.isJsonNull() ? null : new NamedResource(evolvesFromSpecies.getAsJsonObject()).getName(),
-                PokemonHabitat.valueOf(new NamedResource(json.get("habitat")).toEnumName()),
+                json.get("habitat").isJsonNull() ? null : PokemonHabitat.valueOf(new NamedResource(json.get("habitat")).toEnumName()),
                 NamedResource.getNames(json.getAsJsonArray("egg_groups"))
                     .stream()
                     .map(StringUtil::toEnumName)
