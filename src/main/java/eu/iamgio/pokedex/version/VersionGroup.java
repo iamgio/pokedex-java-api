@@ -39,7 +39,9 @@ public enum VersionGroup implements Loadable<VersionGroup.LoadedVersionGroup>, I
     X_Y(15),
     OMEGA_RUBY_ALPHA_SAPPHIRE(16),
     SUN_MOON(17),
-    ULTRA_SUN_ULTRA_MOON(18);
+    ULTRA_SUN_ULTRA_MOON(18),
+    SWORD_SHIELD(19),
+    LETS_GO_PIKACHU_LETS_GO_EEVEE(20);
 
     /**
      * Identifier of this group
